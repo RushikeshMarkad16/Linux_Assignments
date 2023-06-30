@@ -1,0 +1,80 @@
+Generate Random data assignments,
+
+1) Create an empty file of size 100MB using dd command. 
+2) Create a file with random data of size 10MB using dd command. 
+3) Write some data in testfile1.txt in upper case and then Use dd command to convert testfile1.txt data from Uppercase to lowercase. (Use an option conv) and vice versa.
+4) Create a file of size 1GB having random data using dd command. And then copy it to another file in lower case using dd command. 
+
+Fallocate command assignments, 
+1) Create a file of size 100mb using fallocate command. 
+2) Create a file of size 2gb and mesure the time required for file creation  (refer to time command)
+
+
+
+//Create an empty file of size 100MB using dd command
+
+rushikesh@afour-virtual-machine:~$ cd assignment9/
+
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=/dev/zero of=testfile1.txt bs=100M count=1
+1+0 records in
+1+0 records out
+104857600 bytes (105 MB, 100 MiB) copied, 0.118896 s, 882 MB/s
+
+rushikesh@afour-virtual-machine:~/assignment9$ ls -s
+total 102400
+102400 testfile1.txt
+
+
+
+
+//Create a file with random data of size 10MB using dd command. 
+
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=/dev/urandom of=testfile2.txt bs=10M count=1
+1+0 records in
+1+0 records out
+10485760 bytes (10 MB, 10 MiB) copied, 0.12142 s, 86.4 MB/s
+rushikesh@afour-virtual-machine:~/assignment9$ ls -s
+total 112640
+102400 testfile1.txt   10240 testfile2.txt
+
+
+//Write some data in testfile1.txt in upper case and then Use dd command to convert testfile1.txt data from Uppercase to lowercase. (Use an option conv) and vice versa.
+
+
+rushikesh@afour-virtual-machine:~/assignment9$ touch testfile1.txt
+rushikesh@afour-virtual-machine:~/assignment9$ nano testfile1.txt
+rushikesh@afour-virtual-machine:~/assignment9$ cat testfile1.txt
+INDIA BECAME INDEPENDENT IN THE MONTH OF AUGUST
+
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=testfile1.txt of=testfile2.txt conv=lcase
+0+1 records in
+0+1 records out
+48 bytes copied, 9.3277e-05 s, 515 kB/s
+
+rushikesh@afour-virtual-machine:~/assignment9$ cat testfile2.txt
+india became independent in the month of august
+
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=testfile2.txt of=testfile3.txt conv=ucase
+0+1 records in
+0+1 records out
+48 bytes copied, 8.2879e-05 s, 579 kB/s
+rushikesh@afour-virtual-machine:~/assignment9$ cat testfile3.txt
+INDIA BECAME INDEPENDENT IN THE MONTH OF AUGUST
+
+
+
+
+//Create a file of size 1GB having random data using dd command. And then copy it to another file in lower case using dd command.
+
+rushikesh@afour-virtual-machine:~/assignment9$ ls
+testfile1.txt  testfile2.txt  testfile3.txt
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=/dev/urandom of=sample.txt bs=32M count=32
+dd: warning: partial read (33554431 bytes); suggest iflag=fullblock
+0+32 records in
+0+32 records out
+1073741792 bytes (1.1 GB, 1.0 GiB) copied, 38.389 s, 28.0 MB/s
+
+rushikesh@afour-virtual-machine:~/assignment9$ dd if=sample.txt of=sample2.txt
+2097151+1 records in
+2097151+1 records out
+1073741792 bytes (1.1 GB, 1.0 GiB) copied, 41.54 s, 25.8 MB/s

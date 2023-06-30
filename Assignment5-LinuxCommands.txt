@@ -1,0 +1,548 @@
+Run following commands,
+
+1) Run few processes in the background and foreground.
+2) Kill the processes running in the background.
+3) Try running commands for checking status of service - systemctl AND/OR service
+4) Configure service to start at boot time.
+5) Check service related logs in vpdebug logs using grep and specific service name as a pattern to search.
+6) run "man top" to check top command man-page and then run commands like, top, top -p PID, top -b -n COUNT, list threads of running process using "H" and study top command header to get familier with top command. 
+
+Get the output for all above commands.
+
+
+
+rushikesh@afour-virtual-machine:~$ ps
+  PID TTY          TIME CMD
+13107 pts/3    00:00:00 bash
+13604 pts/3    00:00:00 ps
+rushikesh@afour-virtual-machine:~$ ps ux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+rushike+  5393  0.0  0.1  77468  4048 ?        Ss   Apr05   0:00 /lib/systemd/
+rushike+  5398  0.0  0.0 196188    12 ?        S    Apr05   0:00 (sd-pam)
+rushike+  8868  0.0  0.0  51100  2696 ?        Ss   Apr05   0:00 /usr/bin/dbus
+rushike+  8869  0.0  0.0 377432  2268 ?        Sl   Apr05   0:00 ibus-daemon -
+rushike+  8872  0.0  0.0 365784  1900 ?        Ssl  Apr05   0:00 /usr/lib/gvfs
+rushike+  8877  0.0  0.0 432020  1212 ?        Sl   Apr05   0:00 /usr/lib/gvfs
+rushike+  8892  0.0  0.0 296652  1232 ?        Sl   Apr05   0:00 /usr/lib/ibus
+rushike+  8896  0.0  0.0 294596  1212 ?        Sl   Apr05   0:00 /usr/lib/ibus
+rushike+ 13106  0.0  0.0 110076  3688 ?        S    15:43   0:00 sshd: rushike
+rushike+ 13107  0.0  0.1  22592  5116 pts/3    Ss   15:43   0:00 -bash
+rushike+ 13607  0.0  0.0  37380  3388 pts/3    R+   17:14   0:00 ps ux
+rushike+ 15699  0.0  0.1 625680  5292 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15700  0.0  3.8 704844 155636 ?       Sl   Apr06   2:26 /usr/lib/xorg
+rushike+ 15709  0.0  0.0      0     0 ?        Z    Apr06   0:00 [xrdp-chansrv
+rushike+ 15759  0.0  0.0  11312    40 ?        Ss   Apr06   0:01 /usr/bin/ssh-
+rushike+ 15773  0.0  0.0 349288  3280 ?        Ssl  Apr06   0:00 /usr/lib/at-s
+rushike+ 15778  0.0  0.0  50052  2860 ?        S    Apr06   0:00 /usr/bin/dbus
+rushike+ 15780  0.0  0.1 220776  4164 ?        Sl   Apr06   0:01 /usr/lib/at-s
+rushike+ 15794  0.0  0.0 281256  3692 ?        SLl  Apr06   0:00 /usr/bin/gnom
+rushike+ 15803  0.1 11.4 3638952 460572 ?      Sl   Apr06  16:04 /usr/bin/gnom
+rushike+ 15814  0.0  0.1 1043236 4416 ?        Sl   Apr06   0:31 /usr/bin/puls
+rushike+ 15828  0.0  0.0 264452  3236 ?        Ssl  Apr06   0:00 /usr/libexec/
+rushike+ 15833  0.0  0.1 689676  6840 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15839  0.0  0.2 1365068 9788 ?        Ssl  Apr06   0:00 /usr/lib/evol
+rushike+ 15846  0.0  0.2 783840 10224 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15855  0.0  0.1 373064  6176 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 15860  0.0  0.0 266936  3740 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 15869  0.0  0.0 296252  3600 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15874  0.0  0.0 268728  3192 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 15878  0.0  0.1 371720  4560 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 15883  0.0  0.0 281520  3468 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 15887  0.0  0.2 583804 10812 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15888  0.0  0.1 342224  6172 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15890  0.0  0.0 416236  3716 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15896  0.0  0.0 268624  3180 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15901  0.0  0.1 445600  4892 ?        Sl   Apr06   0:01 /usr/lib/gnom
+rushike+ 15907  0.0  0.1 370952  4388 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15910  0.0  0.2 487508 10776 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15914  0.0  0.1 327864  4676 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15917  0.0  0.2 495024 10416 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15921  0.0  0.0 271044  3792 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15926  0.0  0.2 652280 12032 ?        Sl   Apr06   3:06 /usr/lib/gnom
+rushike+ 15928  0.0  0.2 336576  9968 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15929  0.0  0.1 357416  4916 ?        Sl   Apr06   0:09 /usr/lib/gnom
+rushike+ 15930  0.0  0.1 462632  6000 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15934  0.0  0.2 1009260 10584 ?       Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15935  0.0  0.2 499504  9916 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15944  0.0  0.0 271048  3648 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15978  0.0  0.1 501664  6212 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15986  0.0  0.1 271932  4280 ?        Sl   Apr06   0:00 /usr/lib/gnom
+rushike+ 15994  0.0  1.1 885252 45328 ?        Ssl  Apr06   0:00 /usr/lib/evol
+rushike+ 16016  0.0  1.1 1137508 44440 ?       Sl   Apr06   0:00 /usr/lib/evol
+rushike+ 16026  0.0  0.0 188024  3944 ?        Sl   Apr06   0:00 /usr/lib/dcon
+rushike+ 16028  0.0  0.2 725616  8372 ?        Ssl  Apr06   0:00 /usr/lib/evol
+rushike+ 16040  0.0  0.2 1010120 8480 ?        Sl   Apr06   0:00 /usr/lib/evol
+rushike+ 16046  0.0  0.0 197780  3900 ?        Sl   Apr06   0:00 /usr/lib/ibus
+rushike+ 16091  0.0  0.2 590704 11900 ?        Sl   Apr06   0:06 update-notifi
+rushike+ 16093  0.0  6.4 1471112 258100 ?      SLl  Apr06   0:22 /usr/bin/gnom
+rushike+ 16210  0.0  0.2 797196 10876 ?        Sl   Apr06   0:00 /usr/lib/deja
+rushike+ 16495  0.0  0.0 197396  3912 ?        Ssl  Apr06   0:00 /usr/lib/gvfs
+rushike+ 16577  0.0  0.1 434860  4312 ?        Sl   Apr06   0:00 /usr/lib/gvfs
+rushike+ 17180  0.0  0.1 589464  5256 ?        Ssl  Apr06   0:00 /usr/libexec/
+rushike+ 17184  0.0  0.0 488288  3536 ?        Ssl  Apr06   0:00 /usr/libexec/
+rushike+ 17193  0.0  0.2 555968  8620 ?        Ssl  Apr06   0:00 /usr/libexec/
+rushike+ 19420  0.0  0.1 437008  4256 ?        Sl   Apr06   0:00 /usr/lib/gvfs
+rushike+ 19442  0.0  0.1 767504  7336 ?        Sl   Apr06   0:00 /usr/lib/gvfs
+rushike+ 19456  0.0  0.1 587312  4732 ?        Sl   Apr06   0:00 /usr/lib/gvfs
+rushike+ 20313  0.0  0.1 352684  5508 ?        Ssl  Apr06   0:00 /usr/bin/zeit
+rushike+ 22431  0.0  0.1 369768  4892 ?        Sl   Apr06   0:00 /usr/lib/gvfs
+rushike+ 25068  0.0  0.4 642356 16872 ?        Ssl  Apr07   0:04 /usr/lib/gnom
+rushike+ 25075  0.0  0.0  22680  3528 pts/1    Ss+  Apr07   0:00 bash
+rushike+ 25405  0.0  0.0  22576  3404 pts/2    Ss   Apr07   0:00 bash
+rushike+ 25778  0.0  0.0  22448  3204 pts/2    S+   Apr07   0:00 bash
+rushike+ 26877  0.2 14.7 3903600 592696 ?      Sl   Apr07  21:52 /usr/lib/fire
+rushike+ 26925  0.0  0.4 377440 16732 ?        Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 26945  0.0  2.2 2659956 88976 ?       Sl   Apr07   0:12 /usr/lib/fire
+rushike+ 26991  0.0  0.9 2591520 37916 ?       Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27048  0.0  0.3 378864 13024 ?        Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27050  0.1 11.6 3134176 467572 ?      Sl   Apr07  11:03 /usr/lib/fire
+rushike+ 27124  0.0  0.6 2559032 27740 ?       Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27145  0.0  0.7 2559036 28572 ?       Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27166  0.0  0.3 378588 15204 ?        Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27229  0.0  0.6 2559036 28036 ?       Sl   Apr07   0:00 /usr/lib/fire
+rushike+ 27342  0.0  0.5 977704 23340 ?        Sl   Apr07   0:00 /usr/bin/naut
+
+
+rushikesh@afour-virtual-machine:~$ top
+top - 17:16:11 up 8 days,  4:32,  1 user,  load average: 0.00, 0.00, 0.00
+Tasks: 284 total,   1 running, 241 sleeping,   0 stopped,   1 zombie
+%Cpu(s):  0.5 us,  0.1 sy,  0.7 ni, 98.3 id,  0.4 wa,  0.0 hi,  0.0 si,  0.0
+KiB Mem :  4030632 total,   203336 free,  2472512 used,  1354784 buff/cache
+KiB Swap:  2097148 total,  1898236 free,   198912 used.  1193080 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+13618 rushike+  20   0   44248   4040   3248 R   6.2  0.1   0:00.01 top
+    1 root      20   0  225660   7072   4868 S   0.0  0.2   0:23.24 systemd
+    2 root      20   0       0      0      0 S   0.0  0.0   0:00.08 kthreadd
+    3 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 rcu_gp
+    4 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 rcu_par_+
+    6 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 kworker/+
+    9 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 mm_percp+
+   10 root      20   0       0      0      0 S   0.0  0.0   0:01.66 ksoftirq+
+   11 root      20   0       0      0      0 I   0.0  0.0   0:33.79 rcu_sched
+   12 root      rt   0       0      0      0 S   0.0  0.0   0:01.24 migratio+
+   13 root     -51   0       0      0      0 S   0.0  0.0   0:00.00 idle_inj+
+   14 root      20   0       0      0      0 S   0.0  0.0   0:00.00 cpuhp/0
+   15 root      20   0       0      0      0 S   0.0  0.0   0:00.00 cpuhp/1
+   16 root     -51   0       0      0      0 S   0.0  0.0   0:00.00 idle_inj+
+   17 root      rt   0       0      0      0 S   0.0  0.0   0:01.21 migratio+
+   18 root      20   0       0      0      0 S   0.0  0.0   0:00.81 ksoftirq+
+   20 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 kworker/+
+   21 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kdevtmpfs
+   22 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 netns
+   23 root      20   0       0      0      0 S   0.0  0.0   0:00.00 rcu_task+
+   24 root      20   0       0      0      0 S   0.0  0.0   0:00.00 kauditd
+   25 root      20   0       0      0      0 S   0.0  0.0   0:01.08 khungtas+
+   26 root      20   0       0      0      0 S   0.0  0.0   0:00.00 oom_reap+
+   27 root       0 -20       0      0      0 I   0.0  0.0   0:00.00 writeback
+
+
+
+
+ //Run few processes in the background and foreground
+
+rushikesh@afour-virtual-machine:~$ sleep 60
+^Z
+[1]+  Stopped                 sleep 60
+rushikesh@afour-virtual-machine:~$ bg
+[1]+ sleep 60 &
+rushikesh@afour-virtual-machine:~$ ps
+  PID TTY          TIME CMD
+13107 pts/3    00:00:00 bash
+13630 pts/3    00:00:00 sleep
+13632 pts/3    00:00:00 ps
+
+rushikesh@afour-virtual-machine:~$ sleep 60
+[1]+  Done                    sleep 60
+
+
+//Kill the processes running in the background.
+
+rushikesh@afour-virtual-machine:~$ sleep 60 &
+[1] 13781
+rushikesh@afour-virtual-machine:~$ ps
+  PID TTY          TIME CMD
+13107 pts/3    00:00:00 bash
+13781 pts/3    00:00:00 sleep
+13782 pts/3    00:00:00 ps
+rushikesh@afour-virtual-machine:~$ kill 13781
+rushikesh@afour-virtual-machine:~$ ps
+  PID TTY          TIME CMD
+13107 pts/3    00:00:00 bash
+13783 pts/3    00:00:00 ps
+[1]+  Terminated              sleep 60
+
+
+
+//Try running commands for checking status of service - systemctl AND/OR service
+
+rushikesh@afour-virtual-machine:~$ systemctl
+UNIT                      LOAD   ACTIVE     SUB       DESCRIPTION
+proc-sys-fs-binfmt_misc.automount loaded active     running   Arbitrary Execut
+dev-fuse.device           loaded activating tentative /dev/fuse
+sys-devices-pci0000:00-0000:00:07.1-ata2-host1-target1:0:0-1:0:0:0-block-sr0.d
+sys-devices-pci0000:00-0000:00:10.0-host2-target2:0:0-2:0:0:0-block-sda-sda1.d
+sys-devices-pci0000:00-0000:00:10.0-host2-target2:0:0-2:0:0:0-block-sda.device
+sys-devices-pci0000:00-0000:00:11.0-0000:02:00.0-net-ens32.device loaded activ
+sys-devices-platform-floppy.0-block-fd0.device loaded active     plugged   /sy
+sys-devices-platform-serial8250-tty-ttyS0.device loaded active     plugged   /
+sys-devices-platform-serial8250-tty-ttyS1.device loaded active     plugged   /
+sys-devices-platform-serial8250-tty-ttyS10.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS11.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS12.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS13.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS14.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS15.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS16.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS17.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS18.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS19.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS2.device loaded active     plugged   /
+sys-devices-platform-serial8250-tty-ttyS20.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS21.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS22.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS23.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS24.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS25.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS26.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS27.device loaded active     plugged
+sys-devices-platform-serial8250-tty-ttyS28.device loaded active     plugged
+lines 1-30
+
+
+
+
+//Configure service to start at boot time.
+
+rushikesh@afour-virtual-machine:~$ systemctl status networking.service
+● networking.service - Raise network interfaces
+   Loaded: loaded (/lib/systemd/system/networking.service; enabled; vendor pre
+   Active: active (exited) since Wed 2023-04-05 12:27:41 IST; 1 weeks 1 days a
+     Docs: man:interfaces(5)
+ Main PID: 602 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 4666)
+   CGroup: /system.slice/networking.service
+
+Warning: Journal has been rotated since unit was started. Log output is incomp
+
+rushikesh@afour-virtual-machine:~$ systemctl list-units --type=service
+UNIT                          LOAD   ACTIVE SUB     DESCRIPTION
+accounts-daemon.service       loaded active running Accounts Service
+acpid.service                 loaded active running ACPI event daemon
+apparmor.service              loaded active exited  AppArmor initialization
+apport.service                loaded active exited  LSB: automatic crash repor
+avahi-daemon.service          loaded active running Avahi mDNS/DNS-SD Stack
+bolt.service                  loaded active running Thunderbolt system service
+colord.service                loaded active running Manage, Install and Genera
+console-setup.service         loaded active exited  Set console font and keyma
+cron.service                  loaded active running Regular background program
+cups-browsed.service          loaded active running Make remote CUPS printers
+cups.service                  loaded active running CUPS Scheduler
+dbus.service                  loaded active running D-Bus System Message Bus
+fwupd.service                 loaded active running Firmware update daemon
+gdm.service                   loaded active running GNOME Display Manager
+geoclue.service               loaded active running Location Lookup Service
+grub-common.service           loaded active exited  LSB: Record successful boo
+irqbalance.service            loaded active running irqbalance daemon
+kerneloops.service            loaded active running Tool to automatically coll
+keyboard-setup.service        loaded active exited  Set the console keyboard l
+kmod-static-nodes.service     loaded active exited  Create list of required st
+ModemManager.service          loaded active running Modem Manager
+networkd-dispatcher.service   loaded active running Dispatcher daemon for syst
+networking.service            loaded active exited  Raise network interfaces
+NetworkManager-wait-online.service loaded active exited  Network Manager Wait
+NetworkManager.service        loaded active running Network Manager
+packagekit.service            loaded active running PackageKit Daemon
+polkit.service                loaded active running Authorization Manager
+rsyslog.service               loaded active running System Logging Service
+rtkit-daemon.service          loaded active running RealtimeKit Scheduling Pol
+
+rushikesh@afour-virtual-machine:~$ systemctl list-units --type=service --all
+  UNIT                      LOAD      ACTIVE   SUB     DESCRIPTION
+  accounts-daemon.service   loaded    active   running Accounts Service
+  acpid.service             loaded    active   running ACPI event daemon
+  alsa-restore.service      loaded    inactive dead    Save/Restore Sound Card
+  alsa-state.service        loaded    inactive dead    Manage Sound Card State
+  anacron.service           loaded    inactive dead    Run anacron jobs
+  apparmor.service          loaded    active   exited  AppArmor initialization
+  apport-autoreport.service loaded    inactive dead    Process error reports w
+  apport.service            loaded    active   exited  LSB: automatic crash re
+  apt-daily-upgrade.service loaded    inactive dead    Daily apt upgrade and c
+  apt-daily.service         loaded    inactive dead    Daily apt download acti
+● auditd.service            not-found inactive dead    auditd.service
+  avahi-daemon.service      loaded    active   running Avahi mDNS/DNS-SD Stack
+  bolt.service              loaded    active   running Thunderbolt system serv
+  colord.service            loaded    active   running Manage, Install and Gen
+● connman.service           not-found inactive dead    connman.service
+● console-screen.service    not-found inactive dead    console-screen.service
+  console-setup.service     loaded    active   exited  Set console font and ke
+  cron.service              loaded    active   running Regular background prog
+  cups-browsed.service      loaded    active   running Make remote CUPS printe
+  cups.service              loaded    active   running CUPS Scheduler
+  dbus.service              loaded    active   running D-Bus System Message Bu
+  dns-clean.service         loaded    inactive dead    Clean up any mess left
+  emergency.service         loaded    inactive dead    Emergency Shell
+● festival.service          not-found inactive dead    festival.service
+  fstrim.service            loaded    inactive dead    Discard unused blocks
+  fwupd.service             loaded    active   running Firmware update daemon
+  gdm.service               loaded    active   running GNOME Display Manager
+  geoclue.service           loaded    active   running Location Lookup Service
+  getty-static.service      loaded    inactive dead    getty on tty2-tty6 if d
+
+
+rushikesh@afour-virtual-machine:~$ systemctl start fstrim.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to start 'fstrim.service'.
+Authenticating as: afour,,, (afour)
+Password:
+
+
+rushikesh@afour-virtual-machine:~$ systemctl reload fstrim.service
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to reload 'fstrim.service'.
+Authenticating as: afour,,, (afour)
+Password:
+
+
+
+
+//Configure service to start at boot time.
+
+rushikesh@afour-virtual-machine:~$ pwd
+/home/rushikesh
+rushikesh@afour-virtual-machine:~$ touch reboot_message.sh
+rushikesh@afour-virtual-machine:~$ ls
+ls: cannot access 'thinclient_drives': Transport endpoint is not connected
+Assignment3  Documents         google-chrome-stable_current_amd64.deb  Public             testfolder         Videos
+Assignments  Downloads         Music                                   reboot_message.sh  thinclient_drives
+Desktop      examples.desktop  Pictures
+
+rushikesh@afour-virtual-machine:~$ cat reboot_message.sh
+rushikesh@afour-virtual-machine:~$ nano reboot_message.sh
+rushikesh@afour-virtual-machine:~$ cat reboot_message.sh
+#!/bin/sh
+echo "Last reboot time: $(date)" > /etc/motd
+
+rushikesh@afour-virtual-machine:~$ chmod +x reboot_message.sh
+
+rushikesh@afour-virtual-machine:~$ cd /etc/init.d/
+rushikesh@afour-virtual-machine:/etc/init.d$ touch myscript
+touch: cannot touch 'myscript': Permission denied
+rushikesh@afour-virtual-machine:/etc/init.d$ sudo touch myscript
+
+rushikesh@afour-virtual-machine:/etc/init.d$ cat myscript
+rushikesh@afour-virtual-machine:/etc/init.d$ nano myscript
+rushikesh@afour-virtual-machine:/etc/init.d$ cat myscript
+rushikesh@afour-virtual-machine:/etc/init.d$ sudo nano myscript
+rushikesh@afour-virtual-machine:/etc/init.d$ cat myscript
+#! /bin/sh
+# chkconfig: 345 99 10
+case "$1" in
+  start)
+    # Executes our script
+    sudo sh /home/rushikesh/reboot_message.sh
+    ;;
+  *)
+    ;;
+esac
+exit 0
+
+rushikesh@afour-virtual-machine:/etc/init.d$ chkconfig --add ser
+vice_wrapper.sh
+chkconfig: command not found
+rushikesh@afour-virtual-machine:/etc/init.d$ update-rc.d service
+_wrapper.sh defaults
+update-rc.d: error: unable to read /etc/init.d/service_wrapper.sh
+rushikesh@afour-virtual-machine:/etc/init.d$ sudo update-rc.d se
+rvice_wrapper.sh defaults
+update-rc.d: error: unable to read /etc/init.d/service_wrapper.sh
+
+
+
+//Check service related logs in vpdebug logs using grep and specific service name as a pattern to search.
+
+rushikesh@afour-virtual-machine:~$ cd /var/log/
+rushikesh@afour-virtual-machine:/var/log$ ls
+alternatives.log    dpkg.log.1         syslog.1
+alternatives.log.1  faillog            syslog.2.gz
+apport.log          fontconfig.log     syslog.3.gz
+apport.log.1        gdm3               syslog.4.gz
+apt                 gpu-manager.log    syslog.5.gz
+auth.log            hp                 syslog.6.gz
+auth.log.1          installer          syslog.7.gz
+auth.log.2.gz       journal            tallylog
+auth.log.3.gz       kern.log           unattended-upgrades
+bootstrap.log       kern.log.1         wtmp
+btmp                kern.log.2.gz      wtmp.1
+btmp.1              kern.log.3.gz      xrdp.log
+cups                lastlog            xrdp-sesman.log
+dist-upgrade        speech-dispatcher
+dpkg.log            syslog
+
+rushikesh@afour-virtual-machine:/var/log$ tail -n 5 auth.log
+tail: cannot open 'auth.log' for reading: Permission denied
+rushikesh@afour-virtual-machine:/var/log$ sudo tail -n 5 auth.log
+Apr 18 11:35:06 afour-virtual-machine sudo: rushikesh : TTY=pts/4 ; PWD=/etc/init.d ; USER=root ; COMMAND=/usr/sbin/update-rc.d service_wrapper.sh defaults
+Apr 18 11:35:06 afour-virtual-machine sudo: pam_unix(sudo:session): session opened for user root by rushikesh(uid=0)
+Apr 18 11:35:06 afour-virtual-machine sudo: pam_unix(sudo:session): session closed for user root
+Apr 18 11:43:55 afour-virtual-machine sudo: rushikesh : TTY=pts/4 ; PWD=/var/log ; USER=root ; COMMAND=/usr/bin/tail -n 5 auth.log
+Apr 18 11:43:55 afour-virtual-machine sudo: pam_unix(sudo:session): session opened for user root by rushikesh(uid=0)
+
+
+
+rushikesh@afour-virtual-machine:/var/log$ sudo grep "user rushikesh" auth.log
+Apr 17 18:58:02 afour-virtual-machine sshd[9397]: pam_unix(sshd:session): session opened for user rushikesh by (uid=0)
+Apr 17 18:58:02 afour-virtual-machine systemd-logind[607]: New session 364 of user rushikesh.
+Apr 17 21:14:58 afour-virtual-machine sshd[9397]: pam_unix(sshd:session): session closed for user rushikesh
+Apr 18 09:44:59 afour-virtual-machine sshd[13499]: pam_unix(sshd:session): session opened for user rushikesh by (uid=0)
+Apr 18 09:44:59 afour-virtual-machine systemd-logind[607]: New session 382 of user rushikesh.
+Apr 18 10:10:14 afour-virtual-machine sshd[13723]: pam_unix(sshd:session): session opened for user rushikesh by (uid=0)
+Apr 18 10:10:14 afour-virtual-machine systemd-logind[607]: New session 383 of user rushikesh.
+Apr 18 10:40:28 afour-virtual-machine sshd[13930]: pam_unix(sshd:session): session opened for user rushikesh by (uid=0)
+Apr 18 10:40:28 afour-virtual-machine systemd-logind[607]: New session 386 of user rushikesh.
+Apr 18 11:49:23 afour-virtual-machine sudo: rushikesh : TTY=pts/4 ; PWD=/var/log ; USER=root ; COMMAND=/bin/grep user rushikesh auth.log
+
+
+rushikesh@afour-virtual-machine:/var/log$ sudo grep "error" auth
+.log
+Apr 18 11:51:50 afour-virtual-machine sudo: rushikesh : TTY=pts/4 ; PWD=/var/log ; USER=root ; COMMAND=/bin/grep error auth.log
+
+
+
+//run "man top" to check top command man-page and then run commands like, top, top -p PID, top -b -n COUNT, list threads of running process using "H" and study top command header to get familier with top command.
+
+
+rushikesh@afour-virtual-machine:~$ man top
+
+TOP(1)                   User Commands                  TOP(1)
+
+NAME
+       top - display Linux processes
+
+SYNOPSIS
+       top -hv|-bcHiOSs -d secs -n max -u|U user -p pid -o fld
+       -w [cols]
+
+       The  traditional  switches  `-'  and   whitespace   are
+       optional.
+
+DESCRIPTION
+       The  top program provides a dynamic real-time view of a
+       running system.  It can display system summary informa‐
+       tion  as  well  as  a list of processes or threads cur‐
+       rently being managed by the Linux kernel.  The types of
+       system  summary  information shown and the types, order
+       and size of information displayed for processes are all
+       user  configurable  and  that configuration can be made
+       persistent across restarts.
+
+       The program provides a  limited  interactive  interface
+       for  process manipulation as well as a much more exten‐
+       sive interface for personal configuration   --   encom‐
+       passing  every  aspect of its operation.  And while top
+       is referred to throughout this document, you  are  free
+       to  name the program anything you wish.  That new name,
+       possibly an alias, will then be reflected on top's dis‐
+       play  and used when reading and writing a configuration
+ Manual page top(1) line 1 (press h for help or q to quit)  
+
+
+rushikesh@afour-virtual-machine:~$ top
+top - 11:57:59 up 12 days, 23:14,  3 users,  load average: 0.00 Tasks: 290 total,   1 running, 247 sleeping,   0 stopped,   1 z
+%Cpu(s):  0.5 us,  0.2 sy,  0.0 ni, 98.8 id,  0.5 wa,  0.0 hi,
+KiB Mem :  4030632 total,   254136 free,  2353708 used,  142278
+KiB Swap:  2097148 total,  1840892 free,   256256 used.  129780
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM
+   11 root      20   0       0      0      0 I   0.3  0.0
+14475 rushike+  20   0   44248   3928   3132 R   0.3  0.1
+27050 rushike+  20   0 3150916 431452  52016 S   0.3 10.7
+    1 root      20   0  225696   7428   5044 S   0.0  0.2
+    2 root      20   0       0      0      0 S   0.0  0.0
+    3 root       0 -20       0      0      0 I   0.0  0.0
+    4 root       0 -20       0      0      0 I   0.0  0.0
+    6 root       0 -20       0      0      0 I   0.0  0.0
+    9 root       0 -20       0      0      0 I   0.0  0.0
+   10 root      20   0       0      0      0 S   0.0  0.0          12 root      rt   0       0      0      0 S   0.0  0.0
+   13 root     -51   0       0      0      0 S   0.0  0.0
+   14 root      20   0       0      0      0 S   0.0  0.0
+   15 root      20   0       0      0      0 S   0.0  0.0
+   16 root     -51   0       0      0      0 S   0.0  0.0
+   17 root      rt   0       0      0      0 S   0.0  0.0
+   18 root      20   0       0      0      0 S   0.0  0.0
+   20 root       0 -20       0      0      0 I   0.0  0.0
+   21 root      20   0       0      0      0 S   0.0  0.0
+   22 root       0 -20       0      0      0 I   0.0  0.0
+   23 root      20   0       0      0      0 S   0.0  0.0
+   24 root      20   0       0      0      0 S   0.0  0.0
+   25 root      20   0       0      0      0 S   0.0  0.0
+   26 root      20   0       0      0      0 S   0.0  0.0
+
+
+rushikesh@afour-virtual-machine:~$ top -p 27050
+top - 11:58:43 up 12 days, 23:15,  3 users,  load average: 0.00
+Tasks:   1 total,   0 running,   1 sleeping,   0 stopped,   0 z
+%Cpu(s):  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  KiB Mem :  4030632 total,   254452 free,  2353352 used,  142282
+KiB Swap:  2097148 total,  1840892 free,   256256 used.  129815
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM
+27050 rushike+  20   0 3150916 431164  52016 S   0.0 10.7
+
+
+
+rushikesh@afour-virtual-machine:~$ top -H
+top - 12:04:02 up 12 days, 23:20,  2 users,  load average: 0.00
+Threads: 778 total,   1 running, 735 sleeping,   0 stopped,   1
+%Cpu(s):  0.5 us,  0.3 sy,  0.0 ni, 99.2 id,  0.0 wa,  0.0 hi,
+KiB Mem :  4030632 total,   252120 free,  2352492 used,  142602
+KiB Swap:  2097148 total,  1840892 free,   256256 used.  129779
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM
+14561 rushike+  20   0   44808   4608   3288 R  0.7  0.1
+16093 rushike+  20   0 1471112 292208  17744 S  0.3  7.2            1 root      20   0  225696   7428   5044 S  0.0  0.2
+    2 root      20   0       0      0      0 S  0.0  0.0
+    3 root       0 -20       0      0      0 I  0.0  0.0
+    4 root       0 -20       0      0      0 I  0.0  0.0
+    6 root       0 -20       0      0      0 I  0.0  0.0
+    9 root       0 -20       0      0      0 I  0.0  0.0
+   10 root      20   0       0      0      0 S  0.0  0.0
+   11 root      20   0       0      0      0 I  0.0  0.0
+   12 root      rt   0       0      0      0 S  0.0  0.0
+   13 root     -51   0       0      0      0 S  0.0  0.0
+   14 root      20   0       0      0      0 S  0.0  0.0
+   15 root      20   0       0      0      0 S  0.0  0.0
+   16 root     -51   0       0      0      0 S  0.0  0.0
+   17 root      rt   0       0      0      0 S  0.0  0.0
+   18 root      20   0       0      0      0 S  0.0  0.0
+   20 root       0 -20       0      0      0 I  0.0  0.0
+   21 root      20   0       0      0      0 S  0.0  0.0
+   22 root       0 -20       0      0      0 I  0.0  0.0
+   23 root      20   0       0      0      0 S  0.0  0.0
+   24 root      20   0       0      0      0 S  0.0  0.0
+   25 root      20   0       0      0      0 S  0.0  0.0
+   26 root      20   0       0      0      0 S  0.0  0.0        Help for Interactive Commands - procps-ng 3.3.12
+Window 1:Def: Cumulative mode Off.  System: Delay 3.0 secs; Sec
+
+  Z,B,E,e   Global: 'Z' colors; 'B' bold; 'E'/'e' summary/task
+  l,t,m     Toggle Summary: 'l' load avg; 't' task/cpu stats; '
+  0,1,2,3,I Toggle: '0' zeros; '1/2/3' cpus or numa node views;
+  f,F,X     Fields: 'f'/'F' add/remove/order/sort; 'X' increase
+
+  L,&,<,> . Locate: 'L'/'&' find/again; Move sort column: '<'/'
+  R,H,V,J . Toggle: 'R' Sort; 'H' Threads; 'V' Forest view; 'J'
+  c,i,S,j . Toggle: 'c' Cmd name/line; 'i' Idle; 'S' Time; 'j'
+  x,y     . Toggle highlights: 'x' sort field; 'y' running task
+  z,b     . Toggle: 'z' color/mono; 'b' bold/reverse (only if '
+  u,U,o,O . Filter by: 'u'/'U' effective/any user; 'o'/'O' othe
+  n,#,^O  . Set: 'n'/'#' max tasks displayed; Show: Ctrl+'O' ot
+  C,...   . Toggle scroll coordinates msg for: up,down,left,rig
+
+  k,r       Manipulate tasks: 'k' kill; 'r' renice
+  d or s    Set update interval
+  W,Y       Write configuration file 'W'; Inspect other output
+  q         Quit
+          ( commands shown with '.' require a visible task disp
+Press 'h' or '?' for help with Windows,
+Type 'q' or <Esc> to continue q
+
+

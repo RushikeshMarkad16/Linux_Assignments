@@ -1,0 +1,36 @@
+Basic Linux Commands,
+
+1) 
+Complete the Linux CLI challenge using the following link.
+https://cmdchallenge.com/
+
+2) 
+Try below commands,
+A) Create a file named "testfile1.txt", "testfile2.txt" under directory testfolder. Add some data in both files like, Name, Address, Age, Mobile No
+    Now try below commands. 
+	- Find only mobile number from the above files using "grep" command.
+	- Bzip or tar (compress) the files and create a compressed file named testfolder.zip or testfolder.tar
+
+Paste the output / result for the same. 
+
+
+
+rushikesh@afour-virtual-machine:/$ pwd
+home/rushikesh/                         
+rushikesh@afour-virtual-machine:~$ mkdir testfolder
+rushikesh@afour-virtual-machine:~$ cd testfolder/
+rushikesh@afour-virtual-machine:~/testfolder$ touch testfile1.txt testfile2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+testfile1.txt  testfile2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ vi testfile1.txt 
+rushikesh@afour-virtual-machine:~/testfolder$ vi testfile2.txt 
+
+rushikesh@afour-virtual-machine:~/testfolder$ grep -ir "Mobile No" 
+testfile1.txt:Mobile No : 9921568138
+testfile2.txt:Mobile No : 7727514024
+
+rushikesh@afour-virtual-machine:~/testfolder$ tar -cvf testfolder.tar testfile1.txt testfile2.txt 
+testfile1.txt
+testfile2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+testfile1.txt  testfile2.txt  testfolder.tar

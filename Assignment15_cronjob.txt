@@ -1,0 +1,242 @@
+Cronjob command assignments,
+
+To execute cronjob, first try to create following scripts, 
+- Write a script (checkError.sh) which will run and check if /var/log/messages file have any error or failure. Log the error entry in ./error_log.txt with current date & time.
+- Write a script (LogDateTime.sh) which will only write current date and time in ./current_date_time.txt file.
+- Write a script (CurrentUser.sh) to write current logged in user and active terminals (who & whoami commands) inside logged_user.txt
+
+1) Schedule a cronjob to execute checkError.sh in the background to run every 30 minute interval to check any failures OR errors.
+2) Schedule a cronjob to execute LogDateTime.sh in the background to run every day morning 06:00 AM 
+3) Schedule a cronjob to execute LogDateTime.sh in the background to run every year on 1st day of new year. (For verification change date on the system)
+4) Schedule a cronjob to execute CurrentUser.sh in the background to run every day afternoon 12PM and 6PM to get active user details. 
+
+
+
+
+
+
+
+// Write a script (checkError.sh) which will run and check if /var/log/messages file have any error or failure. Log the error entry in ./error_log.txt with current date & time.
+
+rushikesh@afour-virtual-machine:~/assignment15$ nano checkError.sh
+
+rushikesh@afour-virtual-machine:~/assignment15$ chmod 777 checkError.sh
+rushikesh@afour-virtual-machine:~/assignment15$ cat checkError.sh
+#! /bin/bash
+
+cat /var/log/syslog | grep "error" >> /home/rushikesh/assignment15/error_log.txt
+date +"%d-%m-%y  %T" >> /home/rushikesh/assignment15/error_log.txt
+
+
+
+
+
+
+
+// Write a script (LogDateTime.sh) which will only write current date and time in ./current_date_time.txt file.
+
+rushikesh@afour-virtual-machine:~/assignment15$ nano LogDateTime.sh
+
+rushikesh@afour-virtual-machine:~/assignment15$ chmod 777 LogDateTime.sh
+
+rushikesh@afour-virtual-machine:~/assignment15$ cat LogDateTime.sh
+#! /bin/bash
+
+date +"%d-%m-%y  %T" >> /home/rushikesh/assignment15/current_date_time.txt
+
+
+
+
+
+// Write a script (CurrentUser.sh) to write current logged in user and active terminals (who & whoami commands) inside logged_user.txt
+
+rushikesh@afour-virtual-machine:~/assignment15$ nano CurrentUser.sh
+
+rushikesh@afour-virtual-machine:~/assignment15$ chmod 777 CurrentUser.sh
+
+
+
+
+
+// 1) Schedule a cronjob to execute checkError.sh in the background to run every 30 minute interval to check any failures OR errors.
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -e
+crontab: installing new crontab
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+0 6 * * * /home/rushikesh/assignment15/LogDateTime.sh
+@yearly /home/rushikesh/assignment15/LogDateTime.sh
+0 12,18 * * * /home/rushikesh/assignment15/CurrentUser.sh
+*/30 * * * * /home/rushikesh/assignment15/checkError.sh
+
+
+
+
+
+
+
+
+
+
+
+// 2) Schedule a cronjob to execute LogDateTime.sh in the background to run every day morning 06:00 AM 
+
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -e
+crontab: installing new crontab
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+0 6 * * * /home/rushikesh/assignment15/LogDateTime.sh
+
+
+
+
+
+
+
+
+//3) Schedule a cronjob to execute LogDateTime.sh in the background to run every year on 1st day of new year. (For verification change date on the system)
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -e
+crontab: installing new crontab
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+0 6 * * * /home/rushikesh/assignment15/LogDateTime.sh
+@yearly /home/rushikesh/assignment15/LogDateTime.sh
+
+
+
+
+
+
+
+
+
+//4) Schedule a cronjob to execute CurrentUser.sh in the background to run every day afternoon 12PM and 6PM to get active user details.
+
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -e
+crontab: installing new crontab
+crontab: installing new crontab
+
+rushikesh@afour-virtual-machine:~/assignment15$ crontab -l
+# Edit this file to introduce tasks to be run by cron.
+#
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# m h  dom mon dow   command
+
+0 6 * * * /home/rushikesh/assignment15/LogDateTime.sh
+@yearly /home/rushikesh/assignment15/LogDateTime.sh
+0 12,18 * * * /home/rushikesh/assignment15/CurrentUser.sh

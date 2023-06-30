@@ -1,0 +1,682 @@
+Shell scripting assignments, 
+Prereq - Create a testfile1.txt and add some data into it. For example:
+NAME="YourName"
+AGE="YourAge"
+ADDRESS="YourAddress"
+COLLEGE="YourCollegeName"
+ 
+1) Write a shell script to read data from testfile1.txt and print it on shell prompt.
+2) Write a shell script to list running processes and find processes running with current logged in user. 
+3) Write a shell script to generate random data using dd command and write into testfile2.txt
+4) Write a shell script to change NAME and AGE in testfile1.txt using sed command.
+5) Write a shell script capture running process of current logged in user and dump into a file runningprocess.txt for 15 minutes with an interval of 1 min.
+6) Write a shell script to get TAG from the command line inputs and find the respective value from the testfile1.txt
+   For example - ./myscript.sh NAME ===> result should be "YourName" from the testfile1.txt file.
+7) Write a shell script to generate 1000 files inside testfolder of size 10kb each having random data and then calculate the checksum for the directory testfolder. 
+8) Write a shell script to create a tar file of testfolder having 1000 files and check the size of the tar file and print it on the console. 
+9) Write a shell script to mount a remote path on local directory. Prereq is to have a remote path (IP_ADDR://test_folder) to mount it locally. 
+10) Write a shell script to change the permissions for 1000 files created inside testfolder. 
+    Permissions to set (Owner - Read+Write+Execute | Group - Read+Execute | Public - Execute)   
+11) Write a shell script which will create a temp_folder_even and temp_folder_odd and it will create 100 files of size 2MB each using fallocate command. Make sure to write even files under temp_folder_even and odd files under temp_folder_odd folder. 
+
+
+
+
+//Create a testfile1.txt and add some data into it.
+
+rushikesh@afour-virtual-machine:~$ mkdir assignment11
+rushikesh@afour-virtual-machine:~$ cd assignment11/
+rushikesh@afour-virtual-machine:~/assignment11$ touch testfile1.txt
+rushikesh@afour-virtual-machine:~/assignment11$ nano testfile1.txt
+rushikesh@afour-virtual-machine:~/assignment11$ cat testfile1.txt
+NAME= Rushikesh
+AGE= 22
+ADDRESS= Sector 26, Near Akurdi Railway Station,Pune
+COLLEGE= PCCOE
+
+
+
+
+
+// 1)Write a shell script to read data from testfile1.txt and print it on shell prompt.
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano read_data.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat read_data.sh
+#! /bin/bash
+
+value=`cat testfile1.txt`
+echo "$value"
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 read_data.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./read_data.sh
+NAME= Rushikesh
+AGE= 22
+ADDRESS= Sector 26, Near Akurdi Railway Station,Pune
+COLLEGE= PCCOE
+
+
+
+
+// 2) Write a shell script to list running processes and find processes running with current logged in user.
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano list_process.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+hello_world.sh  list_process.sh  read_data.sh  testfile1.txt
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat list_process.sh
+#! /bin/bash
+ps -u rushikesh
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 list_process.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./list_process.sh
+  PID TTY          TIME CMD
+ 5393 ?        00:00:00 systemd
+ 5398 ?        00:00:00 (sd-pam)
+ 8868 ?        00:00:01 dbus-daemon
+ 8869 ?        00:00:00 ibus-daemon
+ 8872 ?        00:00:00 gvfsd
+ 8877 ?        00:00:00 gvfsd-fuse
+ 8892 ?        00:00:00 ibus-dconf
+ 8896 ?        00:00:00 ibus-portal
+15699 ?        00:00:00 gnome-session-b
+15700 ?        00:02:55 Xorg
+15709 ?        00:00:00 xrdp-chansrv <defunct>
+15759 ?        00:00:02 ssh-agent
+15773 ?        00:00:00 at-spi-bus-laun
+15778 ?        00:00:00 dbus-daemon
+15780 ?        00:00:01 at-spi2-registr
+15794 ?        00:00:00 gnome-keyring-d
+15803 ?        00:19:13 gnome-shell
+15814 ?        00:00:38 pulseaudio
+15828 ?        00:00:00 xdg-permission-
+15833 ?        00:00:00 gnome-shell-cal
+15839 ?        00:00:00 evolution-sourc
+15846 ?        00:00:00 goa-daemon
+15855 ?        00:00:00 gvfs-udisks2-vo
+15860 ?        00:00:00 gvfs-goa-volume
+15869 ?        00:00:00 goa-identity-se
+15874 ?        00:00:00 gvfs-mtp-volume
+15878 ?        00:00:00 gvfs-afc-volume
+15883 ?        00:00:00 gvfs-gphoto2-vo
+15887 ?        00:00:00 gsd-power
+15888 ?        00:00:00 gsd-print-notif
+15890 ?        00:00:00 gsd-rfkill
+15896 ?        00:00:00 gsd-screensaver
+15901 ?        00:00:02 gsd-sharing
+15907 ?        00:00:00 gsd-smartcard
+15910 ?        00:00:00 gsd-xsettings
+15914 ?        00:00:00 gsd-sound
+15917 ?        00:00:00 gsd-wacom
+15921 ?        00:00:00 gsd-a11y-settin
+15926 ?        00:09:34 gsd-color
+15928 ?        00:00:00 gsd-clipboard
+15929 ?        00:00:17 gsd-housekeepin
+15930 ?        00:00:00 gsd-datetime
+15934 ?        00:00:00 gsd-media-keys
+15935 ?        00:00:00 gsd-keyboard
+15944 ?        00:00:00 gsd-mouse
+15978 ?        00:00:00 gsd-printer
+15986 ?        00:00:00 gsd-disk-utilit
+15994 ?        00:00:00 evolution-calen
+16016 ?        00:00:00 evolution-calen
+16026 ?        00:00:00 dconf-service
+16028 ?        00:00:00 evolution-addre
+16040 ?        00:00:00 evolution-addre
+16046 ?        00:00:00 ibus-engine-sim
+16091 ?        00:00:12 update-notifier
+16093 ?        00:00:44 gnome-software
+16210 ?        00:00:00 deja-dup-monito
+16495 ?        00:00:00 gvfsd-metadata
+16577 ?        00:00:00 gvfsd-trash
+17180 ?        00:00:00 xdg-desktop-por
+17184 ?        00:00:00 xdg-document-po
+17193 ?        00:00:00 xdg-desktop-por
+19420 ?        00:00:00 gvfsd-network
+19442 ?        00:00:00 gvfsd-smb-brows
+19456 ?        00:00:00 gvfsd-dnssd
+20313 ?        00:00:00 zeitgeist-daemo
+22431 ?        00:00:00 gvfsd-recent
+23417 ?        00:00:00 sshd
+23418 pts/0    00:00:00 bash
+23649 pts/0    00:00:00 list_process.sh
+23650 pts/0    00:00:00 ps
+25068 ?        00:00:04 gnome-terminal-
+25075 pts/1    00:00:00 bash
+25405 pts/2    00:00:00 bash
+25778 pts/2    00:00:00 bash
+26877 ?        00:46:11 firefox
+26925 ?        00:00:00 Socket Process
+26945 ?        00:00:23 Privileged Cont
+26991 ?        00:00:00 WebExtensions
+27048 ?        00:00:00 Utility Process
+27050 ?        00:23:32 Isolated Web Co
+27124 ?        00:00:00 Web Content
+27145 ?        00:00:00 Web Content
+27166 ?        00:00:00 RDD Process
+27229 ?        00:00:00 Web Content
+27342 ?        00:00:00 nautilus
+
+
+
+
+
+// 3) Write a shell script to generate random data using dd command and write into testfile2.txt
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano random_data.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+hello_world.sh   random_data.sh  testfile1.txt
+list_process.sh  read_data.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat random_data.sh
+#! /bin/bash
+
+dd if=/dev/urandom of=testfile2.txt bs=2M count=1
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 random_data.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./random_data.sh
+1+0 records in
+1+0 records out
+2097152 bytes (2.1 MB, 2.0 MiB) copied, 0.0207141 s, 101 MB/s
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+hello_world.sh   random_data.sh  testfile1.txt
+list_process.sh  read_data.sh    testfile2.txt
+
+
+
+
+
+
+
+// 4) Write a shell script to change NAME and AGE in testfile1.txt using sed command.
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat testfile1.txt
+NAME= Rushikesh
+AGE= 22
+ADDRESS= Sector 26, Near Akurdi Railway Station,Pune
+COLLEGE= PCCOE
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano sed_command.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat sed_command.sh
+#! /bin/bash
+sed 's/Rushikesh/Yash/g;s/22/18/g' testfile1.txt
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 sed_command.sh
+rushikesh@afour-virtual-machine:~/assignment11$ ./sed_command.sh
+NAME= Yash
+AGE= 18
+ADDRESS= Sector 26, Near Akurdi Railway Station,Pune
+COLLEGE= PCCOE
+
+
+
+
+// 5) Write a shell script capture running process of current logged in user and dump into a file runningprocess.txt for 15 minutes with an interval of 1 min.
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano running_processes.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat running_processes.sh
+#!/bin/bash
+
+runtime="15 minute"
+endtime=$(date -ud "$runtime" +%s)
+
+while [[ $(date -u +%s) -le $endtime ]]
+do
+    ps -u rushikesh -b -n 15 >> running_processes.txt
+    echo "Sleeping for 1 minute"
+    sleep 1m
+done
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 running_processes.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+hello_world.sh   read_data.sh          testfile1.txt  test.txt
+list_process.sh  running_processes.sh  testfile2.txt
+random_data.sh   sed_command.sh        test.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./running_processes.sh
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+Sleeping for 1 minute
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat running_processes.txt | gr
+ep "PID"
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+  PID TTY          TIME CMD
+
+
+
+
+
+
+// 6) Write a shell script to get TAG from the command line inputs and find the respective value from the testfile1.txt
+   For example - ./myscript.sh NAME ===> result should be "YourName" from the testfile1.txt file.
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano get_tag.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat get_tag.sh
+#! /bin/bash
+cat testfile1.txt | grep "$1"
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 get_tag.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./get_tag.sh NAME
+NAME= Rushikesh
+
+
+
+
+
+
+
+//7) Write a shell script to generate 1000 files inside testfolder of size 10kb each having random data and then calculate the checksum for the directory testfolder. 
+
+rushikesh@afour-virtual-machine:~/assignment11/q7$ nano generate_files.sh
+
+rushikesh@afour-virtual-machine:~/assignment11/q7$ cat generate_files.sh
+#! /bin/bash
+for n in {1..1000}; do
+    dd if=/dev/urandom of=file$( printf %03d "$n" ).bin bs=10 count=$(( RANDOM + 1024 ))
+done
+
+rushikesh@afour-virtual-machine:~/assignment11/q7$ chmod 777 generate_files.sh
+
+rushikesh@afour-virtual-machine:~/assignment11/q7$ ./generate_files.sh
+26943+0 records in
+26943+0 records out
+269430 bytes (269 kB, 263 KiB) copied, 0.0434722 s, 6.2 MB/s
+16042+0 records in
+16042+0 records out
+160420 bytes (160 kB, 157 KiB) copied, 0.0258637 s, 6.2 MB/s
+8189+0 records in
+8189+0 records out
+81890 bytes (82 kB, 80 KiB) copied, 0.0133108 s, 6.2 MB/s
+3016+0 records in
+3016+0 records out
+30160 bytes (30 kB, 29 KiB) copied, 0.00494457 s, 6.1 MB/s
+2114+0 records in
+2114+0 records out
+21140 bytes (21 kB, 21 KiB) copied, 0.00352449 s, 6.0 MB/s
+8865+0 records in
+8865+0 records out
+88650 bytes (89 kB, 87 KiB) copied, 0.0144598 s, 6.1 MB/s
+24783+0 records in
+24783+0 records out
+247830 bytes (248 kB, 242 KiB) copied, 0.0403611 s, 6.1 MB/s
+
+
+...........trimmed............
+
+
+rushikesh@afour-virtual-machine:~/assignment11/q7$ ls -l
+total 174136
+-rw-rw-r-- 1 rushikesh rushikesh 269430 Apr 20 15:11 file001.bin
+-rw-rw-r-- 1 rushikesh rushikesh 160420 Apr 20 15:11 file002.bin
+-rw-rw-r-- 1 rushikesh rushikesh  81890 Apr 20 15:11 file003.bin
+-rw-rw-r-- 1 rushikesh rushikesh  30160 Apr 20 15:11 file004.bin
+-rw-rw-r-- 1 rushikesh rushikesh  21140 Apr 20 15:11 file005.bin
+-rw-rw-r-- 1 rushikesh rushikesh  88650 Apr 20 15:11 file006.bin
+-rw-rw-r-- 1 rushikesh rushikesh 247830 Apr 20 15:11 file007.bin
+-rw-rw-r-- 1 rushikesh rushikesh 222300 Apr 20 15:11 file008.bin
+-rw-rw-r-- 1 rushikesh rushikesh  39430 Apr 20 15:11 file009.bin
+-rw-rw-r-- 1 rushikesh rushikesh 133660 Apr 20 15:11 file010.bin
+-rw-rw-r-- 1 rushikesh rushikesh 197470 Apr 20 15:11 file011.bin
+-rw-rw-r-- 1 rushikesh rushikesh 193160 Apr 20 15:11 file012.bin
+-rw-rw-r-- 1 rushikesh rushikesh  57040 Apr 20 15:11 file013.bin
+
+.........trimmed.........
+
+-rw-rw-r-- 1 rushikesh rushikesh 269640 Apr 20 15:11 file988.bin
+-rw-rw-r-- 1 rushikesh rushikesh 139890 Apr 20 15:11 file989.bin
+-rw-rw-r-- 1 rushikesh rushikesh 178530 Apr 20 15:11 file990.bin
+-rw-rw-r-- 1 rushikesh rushikesh  51210 Apr 20 15:11 file991.bin
+-rw-rw-r-- 1 rushikesh rushikesh 253370 Apr 20 15:11 file992.bin
+-rw-rw-r-- 1 rushikesh rushikesh 252390 Apr 20 15:11 file993.bin
+-rw-rw-r-- 1 rushikesh rushikesh 186100 Apr 20 15:11 file994.bin
+-rw-rw-r-- 1 rushikesh rushikesh 122410 Apr 20 15:11 file995.bin
+-rw-rw-r-- 1 rushikesh rushikesh 324240 Apr 20 15:11 file996.bin
+-rw-rw-r-- 1 rushikesh rushikesh  16090 Apr 20 15:11 file997.bin
+-rw-rw-r-- 1 rushikesh rushikesh 112250 Apr 20 15:11 file998.bin
+-rw-rw-r-- 1 rushikesh rushikesh 291700 Apr 20 15:11 file999.bin
+
+
+
+
+
+
+
+
+
+
+8) Write a shell script to create a tar file of testfolder having 1000 files and check the size of the tar file and print it on the console. 
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano tar.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat tar.sh
+#! /bin/bash
+
+tar -cvf testfolder.tar q7
+ls -l testfolder.tar
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 tar.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./tar.sh
+q7/
+q7/file796.bin
+q7/file263.bin
+q7/file317.bin
+q7/file923.bin
+q7/file700.bin
+q7/file163.bin
+q7/file001.bin
+q7/file769.bin
+q7/file687.bin
+q7/file006.bin
+q7/file560.bin
+q7/file060.bin
+q7/file333.bin
+
+..........trimmed.......
+
+q7/file458.bin
+q7/file562.bin
+q7/file242.bin
+q7/file820.bin
+q7/file399.bin
+q7/file498.bin
+q7/file146.bin
+q7/file465.bin
+q7/file799.bin
+q7/file926.bin
+q7/file345.bin
+q7/file224.bin
+q7/file859.bin
+q7/file171.bin
+q7/file277.bin
+q7/file878.bin
+q7/file230.bin
+-rw-rw-r-- 1 rushikesh rushikesh 176998400 Apr 20 15:35 testfolder.tar
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+get_tag.sh       random_data.sh         sed_command.sh  testfolder.tar
+hello_world.sh   read_data.sh           tar.sh          test.sh
+list_process.sh  running_processes.sh   testfile1.txt   test.txt
+q7               running_processes.txt  testfile2.txt
+
+
+
+
+
+
+
+
+
+9) Write a shell script to mount a remote path on local directory. Prereq is to have a remote path (IP_ADDR://test_folder) to mount it locally. 
+
+
+
+
+
+
+10) Write a shell script to change the permissions for 1000 files created inside testfolder. 
+    Permissions to set (Owner - Read+Write+Execute | Group - Read+Execute | Public - Execute)  
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano permissions.sh
+rushikesh@afour-virtual-machine:~/assignment11$ cat permissions.sh
+#! /bin/bash
+
+chmod -R 751 q7
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 permissions.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./permissions.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls -l q7/
+total 174136
+-rwxr-x--x 1 rushikesh rushikesh 269430 Apr 20 15:11 file001.bin
+-rwxr-x--x 1 rushikesh rushikesh 160420 Apr 20 15:11 file002.bin
+-rwxr-x--x 1 rushikesh rushikesh  81890 Apr 20 15:11 file003.bin
+-rwxr-x--x 1 rushikesh rushikesh  30160 Apr 20 15:11 file004.bin
+-rwxr-x--x 1 rushikesh rushikesh  21140 Apr 20 15:11 file005.bin
+-rwxr-x--x 1 rushikesh rushikesh  88650 Apr 20 15:11 file006.bin
+-rwxr-x--x 1 rushikesh rushikesh 247830 Apr 20 15:11 file007.bin
+-rwxr-x--x 1 rushikesh rushikesh 222300 Apr 20 15:11 file008.bin
+-rwxr-x--x 1 rushikesh rushikesh  39430 Apr 20 15:11 file009.bin
+-rwxr-x--x 1 rushikesh rushikesh 133660 Apr 20 15:11 file010.bin
+-rwxr-x--x 1 rushikesh rushikesh 197470 Apr 20 15:11 file011.bin
+-rwxr-x--x 1 rushikesh rushikesh 193160 Apr 20 15:11 file012.bin
+-rwxr-x--x 1 rushikesh rushikesh  57040 Apr 20 15:11 file013.bin
+-rwxr-x--x 1 rushikesh rushikesh 276660 Apr 20 15:11 file014.bin
+-rwxr-x--x 1 rushikesh rushikesh  76140 Apr 20 15:11 file015.bin
+-rwxr-x--x 1 rushikesh rushikesh 188710 Apr 20 15:11 file016.bin
+-rwxr-x--x 1 rushikesh rushikesh 316030 Apr 20 15:11 file017.bin
+-rwxr-x--x 1 rushikesh rushikesh 218500 Apr 20 15:11 file018.bin
+-rwxr-x--x 1 rushikesh rushikesh 333230 Apr 20 15:11 file019.bin
+-rwxr-x--x 1 rushikesh rushikesh 212850 Apr 20 15:11 file020.bin
+-rwxr-x--x 1 rushikesh rushikesh 128890 Apr 20 15:11 file021.bin
+
+..........trimmed.......
+
+-rwxr-x--x 1 rushikesh rushikesh 210730 Apr 20 15:11 file987.bin
+-rwxr-x--x 1 rushikesh rushikesh 269640 Apr 20 15:11 file988.bin
+-rwxr-x--x 1 rushikesh rushikesh 139890 Apr 20 15:11 file989.bin
+-rwxr-x--x 1 rushikesh rushikesh 178530 Apr 20 15:11 file990.bin
+-rwxr-x--x 1 rushikesh rushikesh  51210 Apr 20 15:11 file991.bin
+-rwxr-x--x 1 rushikesh rushikesh 253370 Apr 20 15:11 file992.bin
+-rwxr-x--x 1 rushikesh rushikesh 252390 Apr 20 15:11 file993.bin
+-rwxr-x--x 1 rushikesh rushikesh 186100 Apr 20 15:11 file994.bin
+-rwxr-x--x 1 rushikesh rushikesh 122410 Apr 20 15:11 file995.bin
+-rwxr-x--x 1 rushikesh rushikesh 324240 Apr 20 15:11 file996.bin
+-rwxr-x--x 1 rushikesh rushikesh  16090 Apr 20 15:11 file997.bin
+-rwxr-x--x 1 rushikesh rushikesh 112250 Apr 20 15:11 file998.bin
+-rwxr-x--x 1 rushikesh rushikesh 291700 Apr 20 15:11 file999.bin
+
+
+
+
+
+
+
+ 
+
+11) Write a shell script which will create a temp_folder_even and temp_folder_odd and it will create 100 files of size 2MB each using fallocate command. Make sure to write even files under temp_folder_even and odd files under temp_folder_odd folder. 
+
+
+rushikesh@afour-virtual-machine:~/assignment11$ nano fallocate_command.sh
+
+rushikesh@afour-virtual-machine:~/assignment11$ chmod 777 fallocate_command.sh
+
+
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+fallocate_command.sh  q7                     sed_command.sh  test.sh
+get_tag.sh            random_data.sh         tar.sh          test.txt
+hello_world.sh        read_data.sh           testfile1.txt
+list_process.sh       running_processes.sh   testfile2.txt
+permissions.sh        running_processes.txt  testfolder.tar
+
+rushikesh@afour-virtual-machine:~/assignment11$ cat fallocate_command.sh
+#! /bin/bash
+
+mkdir temp_folder_even
+mkdir temp_folder_odd
+
+for i in {1..100};
+do
+    if [ `expr $i % 2` == 0 ]
+    then
+        cd temp_folder_even
+          fallocate -l 2MB file$( printf %03d "$i" ).txt
+        cd ..
+    else
+        cd temp_folder_odd
+        fallocate -l 2MB file$( printf %03d "$i" ).txt
+        cd ..
+    fi
+done
+
+echo "Created files Successfully"
+
+
+rushikesh@afour-virtual-machine:~/assignment11$ ./fallocate_command.sh
+Created files Successfully
+
+rushikesh@afour-virtual-machine:~/assignment11$ ls
+fallocate_command.sh  random_data.sh         temp_folder_odd
+file001.txt           read_data.sh           testfile1.txt
+get_tag.sh            running_processes.sh   testfile2.txt
+hello_world.sh        running_processes.txt  testfolder.tar
+list_process.sh       sed_command.sh         test.sh
+permissions.sh        tar.sh                 test.txt
+q7                    temp_folder_even
+
+rushikesh@afour-virtual-machine:~/assignment11$ cd temp_folder_even/
+
+rushikesh@afour-virtual-machine:~/assignment11/temp_folder_even$ ls -lrthtotal 96M
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file002.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file004.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file006.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file008.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file010.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file012.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file014.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file016.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file018.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file020.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file022.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file024.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file026.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file028.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file030.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file032.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file034.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file036.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file038.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file040.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file042.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file044.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file046.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file048.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file050.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file052.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file054.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file056.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file058.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file060.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file062.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file064.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file066.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file068.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file070.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file072.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file074.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file076.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file078.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file080.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file082.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file084.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file086.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file088.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file090.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file092.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file094.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file096.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file098.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file100.txt
+
+
+rushikesh@afour-virtual-machine:~/assignment11/temp_folder_even$ cd ..
+rushikesh@afour-virtual-machine:~/assignment11$ cd temp_folder_odd/
+
+rushikesh@afour-virtual-machine:~/assignment11/temp_folder_odd$ ls -lrth
+total 96M
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file001.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file003.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file005.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file007.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file009.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file011.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file013.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file015.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file017.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file019.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file021.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file023.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file025.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file027.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file029.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file031.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file033.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file035.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file037.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file039.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file041.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file043.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file045.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file047.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file049.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file051.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file053.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file055.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file057.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file059.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file061.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file063.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file065.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file067.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file069.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file071.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file073.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file075.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file077.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file079.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file081.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file083.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file085.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file087.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file089.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file091.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file093.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file095.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file097.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 20 18:39 file099.txt
+
+
+
+
+
+

@@ -1,0 +1,491 @@
+1) Create User and set password for login. 
+2) Now login with respective user credentials and after login, perform file operations like "cd" to respective dir, "touch testfile1.txt" under /home/USER_NAME/ directory and also in other directories like /root/ /opt/ etc. and check the results. 
+3) Check the respective changes inside /etc/passwd, /etc/users /etc/groups files for perticular user.
+4) Now create 10 local users and verify creation of user accounts 
+Create two group and add 5 users to group1 and another 5 users to group2
+5) Delete 2 Users from each group and check /etc/passwd /etc/users /etc/groups files.
+
+Paste the output / result for the same.
+
+
+//Check existing users
+
+rushikesh@afour-virtual-machine:~$ tail /etc/passwd
+colord:x:117:123:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+
+
+//Creating new user named test1
+rushikesh@afour-virtual-machine:~$ useradd test1 -d "/home/test1"
+useradd: Permission denied.
+useradd: cannot lock /etc/passwd; try again later.
+rushikesh@afour-virtual-machine:~$ sudo useradd test1 -d "/home/test1"
+
+
+//Confirming Generation of new user named test1
+rushikesh@afour-virtual-machine:~$ tail /etc/passwd
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+
+//Updating password for new user test1
+rushikesh@afour-virtual-machine:~$ passwd test1
+passwd: You may not view or modify password information for test1.
+rushikesh@afour-virtual-machine:~$ sudo passwd test1
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+
+
+//Creating the home directory for new user test1
+rushikesh@afour-virtual-machine:/home$ ls
+a4tech  afour  rushikesh
+rushikesh@afour-virtual-machine:/home$ sudo mkhomedir_helper test1
+[sudo] password for rushikesh:
+rushikesh@afour-virtual-machine:/home$ ls
+a4tech  afour  rushikesh  test1
+rushikesh@afour-virtual-machine:/home$ cd test1/
+rushikesh@afour-virtual-machine:/home/test1$ ls
+examples.desktop
+
+
+//Logging in to new user test1
+rushikesh@afour-virtual-machine:~$ whoami
+rushikesh
+
+rushikesh@afour-virtual-machine:~$ su - test1
+Password:
+$ pwd
+/home/test1
+
+
+//perform file operations like "cd" to respective dir, "touch testfile1.txt" under /home/USER_NAME/ directory and also in other directories like /root/ /opt/ etc. and check the results.
+
+$ cd ..
+$ ls
+a4tech  afour  rushikesh  test1
+$ cd test1
+$ pwd
+/home/test1
+
+$ touch testfile1.txt
+$ ls
+examples.desktop  testfile1.txt
+
+$ pwd
+/home/test1
+$ cd ..
+$ cd ..
+$ pwd
+/
+$ ls
+bin    etc             lib         mnt   run   swapfile  var
+boot   home            lib64       opt   sbin  sys       vmlinuz
+cdrom  initrd.img      lost+found  proc  snap  tmp       vmlinuz.old
+dev    initrd.img.old  media       root  srv   usr
+
+$ cd root
+-su: 16: cd: can't cd to root
+
+$ cd opt
+$ touch testfile1.txt
+touch: cannot touch 'testfile1.txt': Permission denied
+$ sudo touch testfile1.txt
+[sudo] password for test1:
+test1 is not in the sudoers file.  This incident will be reported.
+$ pwd
+/opt
+$ cd ..
+
+$ cd etc
+$ touch testfile1.txt
+touch: cannot touch 'testfile1.txt': Permission denied
+
+
+
+
+//Check the respective changes inside /etc/passwd, /etc/users /etc/groups files for perticular user.
+
+$ tail /etc/passwd
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+
+rushikesh@afour-virtual-machine:~$ tail /etc/group
+avahi:x:122:
+colord:x:123:
+geoclue:x:124:
+gdm:x:125:
+afour:x:1000:
+sambashare:x:126:afour
+xrdp:x:127:
+a4tech:x:1001:
+rushikesh:x:1002:
+test1:x:1003:
+
+rushikesh@afour-virtual-machine:~$ tail /etc/users
+tail: cannot open '/etc/users' for reading: No such file or directory
+
+
+
+//create 10 local users 
+
+rushikesh@afour-virtual-machine:~/testfolder$ touch MoreUsers.txt
+rushikesh@afour-virtual-machine:~/testfolder$ nano MoreUsers.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat MoreUsers.txt
+Username
+rushikesh@afour-virtual-machine:~/testfolder$ nano MoreUsers.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat MoreUsers.txt
+test2:x:1004:1004::/home/test2:/bin/sh
+test3:x:1005:1005::/home/test3:/bin/sh
+test4:x:1006:1006::/home/test4:/bin/sh
+test5:x:1007:1007::/home/test5:/bin/sh
+test6:x:1008:1008::/home/test6:/bin/sh
+test7:x:1009:1009::/home/test7:/bin/sh
+test8:x:1010:1010::/home/test8:/bin/sh
+test9:x:1011:1011::/home/test9:/bin/sh
+test10:x:1012:1012::/home/test10:/bin/sh
+test11:x:1013:1013::/home/test11:/bin/sh
+
+rushikesh@afour-virtual-machine:~/testfolder$ sudo chmod 0600 MoreUsers.txt
+[sudo] password for rushikesh:
+
+
+
+//verify creation of user accounts 
+
+rushikesh@afour-virtual-machine:~/testfolder$ tail -5 /etc/passwd
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+rushikesh@afour-virtual-machine:~/testfolder$ sudo newusers MoreUsers.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+uuidd:x:105:111::/run/uuidd:/usr/sbin/nologin
+avahi-autoipd:x:106:112:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/usr/sbin/nologin
+usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+dnsmasq:x:108:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+rtkit:x:109:114:RealtimeKit,,,:/proc:/usr/sbin/nologin
+cups-pk-helper:x:110:116:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
+speech-dispatcher:x:111:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+whoopsie:x:112:117::/nonexistent:/bin/false
+kernoops:x:113:65534:Kernel Oops Tracking Daemon,,,:/:/usr/sbin/nologin
+saned:x:114:119::/var/lib/saned:/usr/sbin/nologin
+pulse:x:115:120:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+avahi:x:116:122:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin
+colord:x:117:123:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+test2:x:1004:1004::/home/test2:/bin/sh
+test3:x:1005:1005::/home/test3:/bin/sh
+test4:x:1006:1006::/home/test4:/bin/sh
+test5:x:1007:1007::/home/test5:/bin/sh
+test6:x:1008:1008::/home/test6:/bin/sh
+test7:x:1009:1009::/home/test7:/bin/sh
+test8:x:1010:1010::/home/test8:/bin/sh
+test9:x:1011:1011::/home/test9:/bin/sh
+test10:x:1012:1012::/home/test10:/bin/sh
+test11:x:1013:1013::/home/test11:/bin/sh
+
+
+rushikesh@afour-virtual-machine:~$ cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog,afour
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:afour
+floppy:x:25:
+tape:x:26:
+sudo:x:27:afour
+audio:x:29:pulse
+dip:x:30:afour
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:afour
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+systemd-journal:x:101:
+systemd-network:x:102:
+systemd-resolve:x:103:
+input:x:104:
+crontab:x:105:
+syslog:x:106:
+messagebus:x:107:
+netdev:x:108:
+mlocate:x:109:
+ssl-cert:x:110:
+uuidd:x:111:
+avahi-autoipd:x:112:
+bluetooth:x:113:
+rtkit:x:114:
+ssh:x:115:
+lpadmin:x:116:afour
+whoopsie:x:117:
+scanner:x:118:saned
+saned:x:119:
+pulse:x:120:
+pulse-access:x:121:
+avahi:x:122:
+colord:x:123:
+geoclue:x:124:
+gdm:x:125:
+afour:x:1000:
+sambashare:x:126:afour
+xrdp:x:127:
+a4tech:x:1001:
+rushikesh:x:1002:
+test1:x:1003:
+test2:x:1004:
+test3:x:1005:
+test4:x:1006:
+test5:x:1007:
+test6:x:1008:
+test7:x:1009:
+test8:x:1010:
+test9:x:1011:
+test10:x:1012:
+test11:x:1013:
+
+
+
+//Changing user group
+rushikesh@afour-virtual-machine:~$ usermod -g 1003 test2
+usermod: Permission denied.
+usermod: cannot lock /etc/passwd; try again later.
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1003 test2
+[sudo] password for rushikesh:
+rushikesh@afour-virtual-machine:~$ nano /etc/group
+rushikesh@afour-virtual-machine:~$ nano /etc/passwd
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1003 test3
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1003 test4
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1003 test5
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1003 test6
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1004 test7
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1004 test8
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1004 test9
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1004 test10
+rushikesh@afour-virtual-machine:~$ sudo usermod -g 1004 test11
+rushikesh@afour-virtual-machine:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+uuidd:x:105:111::/run/uuidd:/usr/sbin/nologin
+avahi-autoipd:x:106:112:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/usr/sbin/nologin
+usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+dnsmasq:x:108:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+rtkit:x:109:114:RealtimeKit,,,:/proc:/usr/sbin/nologin
+cups-pk-helper:x:110:116:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
+speech-dispatcher:x:111:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+whoopsie:x:112:117::/nonexistent:/bin/false
+kernoops:x:113:65534:Kernel Oops Tracking Daemon,,,:/:/usr/sbin/nologin
+saned:x:114:119::/var/lib/saned:/usr/sbin/nologin
+pulse:x:115:120:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+avahi:x:116:122:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin
+colord:x:117:123:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+test2:x:1004:1003::/home/test2:/bin/sh
+test3:x:1005:1003::/home/test3:/bin/sh
+test4:x:1006:1003::/home/test4:/bin/sh
+test5:x:1007:1003::/home/test5:/bin/sh
+test6:x:1008:1003::/home/test6:/bin/sh
+test7:x:1009:1004::/home/test7:/bin/sh
+test8:x:1010:1004::/home/test8:/bin/sh
+test9:x:1011:1004::/home/test9:/bin/sh
+test10:x:1012:1004::/home/test10:/bin/sh
+test11:x:1013:1004::/home/test11:/bin/sh
+
+
+
+//Delete 2 Users from each group and check /etc/passwd /etc/users /etc/groups files.
+
+rushikesh@afour-virtual-machine:~$ pwd
+/home/rushikesh
+rushikesh@afour-virtual-machine:~$ cd ..
+rushikesh@afour-virtual-machine:/home$ ls
+a4tech  rushikesh  test10  test2  test4  test6  test8
+afour   test1      test11  test3  test5  test7  test9
+
+rushikesh@afour-virtual-machine:/home$ userdel -r test5
+userdel: Permission denied.
+userdel: cannot lock /etc/passwd; try again later.
+rushikesh@afour-virtual-machine:/home$ sudo userdel -r test5
+[sudo] password for rushikesh:
+userdel: group test5 not removed because it is not the primary group of user test5.
+userdel: test5 mail spool (/var/mail/test5) not found
+rushikesh@afour-virtual-machine:/home$ sudo userdel -r test6
+userdel: group test6 not removed because it is not the primary group of user test6.
+userdel: test6 mail spool (/var/mail/test6) not found
+rushikesh@afour-virtual-machine:/home$ ls
+a4tech  rushikesh  test10  test2  test4  test8
+afour   test1      test11  test3  test7  test9
+rushikesh@afour-virtual-machine:/home$ sudo userdel -r test10
+userdel: group test10 not removed because it is not the primary group of user test10.
+userdel: test10 mail spool (/var/mail/test10) not found
+rushikesh@afour-virtual-machine:/home$ sudo userdel -r test11
+userdel: group test11 not removed because it is not the primary group of user test11.
+userdel: test11 mail spool (/var/mail/test11) not found
+rushikesh@afour-virtual-machine:/home$ ls
+a4tech  afour  rushikesh  test1  test2  test3  test4  test7  test8  test9
+
+
+rushikesh@afour-virtual-machine:/home$ cd rushikesh/
+rushikesh@afour-virtual-machine:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+uuidd:x:105:111::/run/uuidd:/usr/sbin/nologin
+avahi-autoipd:x:106:112:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/usr/sbin/nologin
+usbmux:x:107:46:usbmux daemon,,,:/var/lib/usbmux:/usr/sbin/nologin
+dnsmasq:x:108:65534:dnsmasq,,,:/var/lib/misc:/usr/sbin/nologin
+rtkit:x:109:114:RealtimeKit,,,:/proc:/usr/sbin/nologin
+cups-pk-helper:x:110:116:user for cups-pk-helper service,,,:/home/cups-pk-helper:/usr/sbin/nologin
+speech-dispatcher:x:111:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+whoopsie:x:112:117::/nonexistent:/bin/false
+kernoops:x:113:65534:Kernel Oops Tracking Daemon,,,:/:/usr/sbin/nologin
+saned:x:114:119::/var/lib/saned:/usr/sbin/nologin
+pulse:x:115:120:PulseAudio daemon,,,:/var/run/pulse:/usr/sbin/nologin
+avahi:x:116:122:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/usr/sbin/nologin
+colord:x:117:123:colord colour management daemon,,,:/var/lib/colord:/usr/sbin/nologin
+hplip:x:118:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+geoclue:x:119:124::/var/lib/geoclue:/usr/sbin/nologin
+gnome-initial-setup:x:120:65534::/run/gnome-initial-setup/:/bin/false
+gdm:x:121:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+afour:x:1000:1000:afour,,,:/home/afour:/bin/bash
+sshd:x:122:65534::/run/sshd:/usr/sbin/nologin
+xrdp:x:123:127::/var/run/xrdp:/usr/sbin/nologin
+a4tech:x:1001:1001:a4tech,,,:/home/a4tech:/bin/bash
+rushikesh:x:1002:1002:rushikesh,,,:/home/rushikesh:/bin/bash
+test1:x:1003:1003::/home/test1:/bin/sh
+test2:x:1004:1003::/home/test2:/bin/sh
+test3:x:1005:1003::/home/test3:/bin/sh
+test4:x:1006:1003::/home/test4:/bin/sh
+test7:x:1009:1004::/home/test7:/bin/sh
+test8:x:1010:1004::/home/test8:/bin/sh
+test9:x:1011:1004::/home/test9:/bin/sh
+

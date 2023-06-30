@@ -1,0 +1,55 @@
+VDBench command assignments, 
+1) Create a configuration file having single run and one raw disk.
+2) Create a configuration file having two runs, two raw disks and two workloads. 
+3) Create a configuration fikle for File system test. 
+
+
+
+VDBench command assignments, 
+// 1) Create a configuration file having single run and one raw disk.
+sd=sd1,lun=/dev/rdsk/c0t0d0sx
+wd=wd1,sd=sd1,xfersize=4096,rdpct=100
+rd=run1,wd=wd1,iorate=100,elapsed=10,interval=1
+
+
+
+// 2) Create a configuration file having two runs, two raw disks and two workloads. 
+sd=sd1,lun=/dev/rdsk/c0t0d0sx
+sd=sd2,lun=/dev/rdsk/c0t0d1sx
+wd=wd1,sd=(sd1,sd2),xfersize=4k,rdpct=75
+wd=wd2,sd=(sd1,sd2),xfersize=8k,rdpct=100
+rd=default,elapsed=10,interval=1
+rd=run1,wd=(wd1,wd2),iorate=100
+rd=run2,wd=(wd1,wd2),iorate=200
+
+
+
+
+// 3) Create a configuration fikle for File system test.
+sd=sd1,lun=/dev/sdb0
+wd=rr,sd=sd1,xfersize=4096,rdpct=100
+rd=run1,wd=rr,iorate=100,elapsed=10,interval=1
+
+
+
+
+IOStat command assignments, 
+1) Write a command to get CPU utilization with 30sec interval and only 5 iterations. 
+2) Display iostats in mega bytes with 10sec interval and only 2 iterations. 
+3) Write a command to get I/O statistics only for specific device like sda or sdb 
+
+
+
+
+IOStat command assignments,
+// 1) Write a command to get CPU utilization with 30sec interval and only 5 iterations.
+$ iostat -d 30 5
+
+
+// 2) Display iostats in mega bytes with 10sec interval and only 2 iterations. 
+$ iostat -m 2 10    
+
+
+//3) Write a command to get I/O statistics only for specific device like sda or sdb 
+$ iostat -d /dev/sda
+$ iostat -d /dev/sdb

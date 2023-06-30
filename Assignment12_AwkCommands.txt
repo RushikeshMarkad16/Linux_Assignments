@@ -1,0 +1,113 @@
+Awk commands assignments, 
+Prereq - employee.txt
+Akash    manager  account  45000
+Akshay   clerk    account  25000
+Dinesh   manager  sales    50000
+Manthan  manager  account  47000
+Swara    accounts sales    15000
+Ashish   clerk    sales    23000
+Mayuresh engineer sales    43000
+Atharva  engineer sales    43000
+Satish  director purchase 80000 
+
+1) Print / list all recrods from testfile1.txt
+2) Print all manager records from testfile1.txt 
+3) Print names and salary of employees having position as engineer
+4) Count the number of records from the employee.txt
+5) Print the last field using built-in variable. 
+6) Print the records of employee having salary > 30000
+
+
+
+// Pre-requisite
+
+rushikesh@afour-virtual-machine:~$ mkdir assignment12
+rushikesh@afour-virtual-machine:~$ cd assignment12
+rushikesh@afour-virtual-machine:~/assignment12$ nano employee.txt
+rushikesh@afour-virtual-machine:~/assignment12$ cat employee.txt
+Akash    manager  account  45000
+Akshay   clerk    account  25000
+Dinesh   manager  sales    50000
+Manthan  manager  account  47000
+Swara    accounts sales    15000
+Ashish   clerk    sales    23000
+Mayuresh engineer sales    43000
+Atharva  engineer sales    43000
+Satish  director purchase 80000
+
+
+
+
+// 1) Print / list all recrods from testfile1.txt
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk '{print}' employee.txt
+Akash    manager  account  45000
+Akshay   clerk    account  25000
+Dinesh   manager  sales    50000
+Manthan  manager  account  47000
+Swara    accounts sales    15000
+Ashish   clerk    sales    23000
+Mayuresh engineer sales    43000
+Atharva  engineer sales    43000
+Satish  director purchase 80000
+
+
+
+
+
+// 2) Print all manager records from testfile1.txt 
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk '/manager/ {print}' e
+mployee.txt
+Akash    manager  account  45000
+Dinesh   manager  sales    50000
+Manthan  manager  account  47000
+
+
+
+
+
+// 3) Print names and salary of employees having position as engineer
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk '/engineer/ {print $1,$4}' employee.txt
+Mayuresh 43000
+Atharva 43000
+
+
+
+
+
+// 4) Count the number of records from the employee.txt
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk 'END {print NR}' employee.txt
+9
+
+
+
+
+// 5) Print the last field using built-in variable. 
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk '{print $NF}' employee.txt
+45000
+25000
+50000
+47000
+15000
+23000
+43000
+43000
+80000
+
+
+
+
+// 6) Print the records of employee having salary > 30000
+
+rushikesh@afour-virtual-machine:~/assignment12$ awk '$4>30000 {print}' em
+ployee.txt
+Akash    manager  account  45000
+Dinesh   manager  sales    50000
+Manthan  manager  account  47000
+Mayuresh engineer sales    43000
+Atharva  engineer sales    43000
+Satish  director purchase 80000

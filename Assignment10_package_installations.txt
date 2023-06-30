@@ -1,0 +1,677 @@
+Install following packages using yum/apt-get
+
+1) Install any webserver on linux system. And check running services.
+2) Install mysql/psql/mongo db on linux system and check running services
+3) List all python packages installed on the system.
+4) Uninstall webserver / mongodb and its dependancies.
+5) Install specific version of webserver / mongodb and list down running services.
+6) After installing specific version, now perform update for respective web-server/mongodb
+
+
+Capture the output and paste below every question.
+
+
+//Install any webserver on linux system. And check running services.
+
+rushikesh@afour-virtual-machine:~$ sudo apt update
+[sudo] password for rushikesh:
+Hit:1 https://dl.google.com/linux/chrome/deb stable InRelease
+Hit:2 http://in.archive.ubuntu.com/ubuntu bionic InRelease
+Hit:3 http://in.archive.ubuntu.com/ubuntu bionic-updates InRelease
+Get:4 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:5 http://in.archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Fetched 172 kB in 1s (190 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+162 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+rushikesh@afour-virtual-machine:~$ sudo apt install apache2
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  apache2-bin apache2-data apache2-utils libapr1 libaprutil1
+Enabling module authn_file.
+Enabling module authz_user.
+Enabling module alias.
+Enabling module dir.
+Enabling module autoindex.
+Enabling module env.
+Enabling module mime.
+Enabling module negotiation.
+Enabling module setenvif.
+Enabling module filter.
+Enabling module deflate.
+Enabling module status.
+Enabling module reqtimeout.
+Enabling conf charset.
+Enabling conf localized-error-pages.
+Enabling conf other-vhosts-access-log.
+Enabling conf security.
+Enabling conf serve-cgi-bin.
+Enabling site 000-default.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache2.service → /lib/systemd/system/apache2.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache-htcacheclean.service → /lib/systemd/system/apache-htcacheclean.service.
+Processing triggers for libc-bin (2.27-3ubuntu1.5) ...
+Processing triggers for systemd (237-3ubuntu10.57) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for ufw (0.36-0ubuntu0.18.04.1) ...
+Processing triggers for ureadahead (0.100.0-21) ...
+
+rushikesh@afour-virtual-machine:~$ sudo systemctl status apache2
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset
+  Drop-In: /lib/systemd/system/apache2.service.d
+           └─apache2-systemd.conf
+   Active: active (running) since Tue 2023-04-18 19:15:32 IST; 1min 31s ago
+ Main PID: 21047 (apache2)
+    Tasks: 55 (limit: 4666)
+   CGroup: /system.slice/apache2.service
+           ├─21047 /usr/sbin/apache2 -k start
+           ├─21048 /usr/sbin/apache2 -k start
+           └─21049 /usr/sbin/apache2 -k start
+
+Apr 18 19:15:32 afour-virtual-machine systemd[1]: Starting The Apache HTTP Ser
+Apr 18 19:15:32 afour-virtual-machine apachectl[21036]: AH00558: apache2: Coul
+Apr 18 19:15:32 afour-virtual-machine systemd[1]: Started The Apache HTTP Serv
+
+rushikesh@afour-virtual-machine:~$ service --status-all | grep "apache"
+ [ + ]  apache-htcacheclean
+ [ + ]  apache2
+
+rushikesh@afour-virtual-machine:~$ systemctl | grep apache
+apache2.service
+      loaded active     running   The Apache HTTP Server
+
+
+
+
+
+//Install mysql/psql/mongo db on linux system and check running services
+
+rushikesh@afour-virtual-machine:~$ curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+[sudo] password for rushikesh:
+Command 'curl' not found, but can be installed with:
+
+
+rushikesh@afour-virtual-machine:~$ sudo apt  install curl
+[sudo] password for rushikesh:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libcurl4
+The following NEW packages will be installed
+  curl libcurl4
+0 to upgrade, 2 to newly install, 0 to remove and 162 not to upgrade.
+Need to get 379 kB of archives.
+After this operation, 1,059 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl4 amd64 7.58.0-2ubuntu3.24 [221 kB]
+Get:2 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 curl amd64 7.58.0-2ubuntu3.24 [159 kB]
+Fetched 379 kB in 2s (188 kB/s)
+Selecting previously unselected package libcurl4:amd64.
+(Reading database ... 167495 files and directories currently installed.)
+Preparing to unpack .../libcurl4_7.58.0-2ubuntu3.24_amd64.deb ...
+Unpacking libcurl4:amd64 (7.58.0-2ubuntu3.24) ...
+Selecting previously unselected package curl.
+Preparing to unpack .../curl_7.58.0-2ubuntu3.24_amd64.deb ...
+Unpacking curl (7.58.0-2ubuntu3.24) ...
+Setting up libcurl4:amd64 (7.58.0-2ubuntu3.24) ...
+Setting up curl (7.58.0-2ubuntu3.24) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.5) ...
+
+rushikesh@afour-virtual-machine:~$ curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+OK
+
+rushikesh@afour-virtual-machine:~$ apt-key list
+/etc/apt/trusted.gpg
+--------------------
+pub   rsa4096 2019-05-28 [SC] [expires: 2024-05-26]
+      2069 1EEC 3521 6C63 CAF6  6CE1 6564 08E3 90CF B1F5
+uid           [ unknown] MongoDB 4.4 Release Signing Key <packaging@mongodb.com>
+
+rushikesh@afour-virtual-machine:~$ sudo apt update
+Hit:1 https://dl.google.com/linux/chrome/deb stable InRelease
+Get:2 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Ign:3 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 InRelease
+Hit:4 http://in.archive.ubuntu.com/ubuntu bionic InRelease
+Get:5 http://security.ubuntu.com/ubuntu bionic-security/main amd64 DEP-11 Metadata [76.7 kB]
+Get:6 http://in.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:7 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release [5,029 B]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 DEP-11 Metadata [62.5 kB]
+Get:9 http://in.archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Get:10 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release.gpg [801 B]
+Get:11 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 DEP-11 Metadata [2,468 B]
+Get:12 http://in.archive.ubuntu.com/ubuntu bionic-updates/main i386 Packages [1,632 kB]
+Get:13 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 Packages [40.4 kB]
+Get:14 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse arm64 Packages [31.8 kB]
+Get:15 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [2,962 kB]
+Get:16 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 DEP-11 Metadata [297 kB]
+Get:17 http://in.archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [1,226 kB]
+Get:18 http://in.archive.ubuntu.com/ubuntu bionic-updates/restricted i386 Packages [39.8 kB]
+Get:19 http://in.archive.ubuntu.com/ubuntu bionic-updates/universe amd64 DEP-11 Metadata [304 kB]
+Get:20 http://in.archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 DEP-11 Metadata [2,468 B]
+Get:21 http://in.archive.ubuntu.com/ubuntu bionic-backports/main amd64 DEP-11 Metadata [8,104 B]
+Get:22 http://in.archive.ubuntu.com/ubuntu bionic-backports/universe amd64 DEP-11 Metadata [10.0 kB]
+Fetched 6,961 kB in 7s (931 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+162 packages can be upgraded. Run 'apt list --upgradable' to see them.
+
+rushikesh@afour-virtual-machine:~$ sudo apt install mongodb-org 
+Preparing to unpack .../3-mongodb-org-mongos_4.4.20_amd64.deb ...
+Unpacking mongodb-org-mongos (4.4.20) ...
+Selecting previously unselected package mongodb-org-database-tools-extra.
+Preparing to unpack .../4-mongodb-org-database-tools-extra_4.4.20_amd64.deb ...
+Unpacking mongodb-org-database-tools-extra (4.4.20) ...
+Selecting previously unselected package mongodb-org-tools.
+Preparing to unpack .../5-mongodb-org-tools_4.4.20_amd64.deb ...
+Unpacking mongodb-org-tools (4.4.20) ...
+Selecting previously unselected package mongodb-org.
+Preparing to unpack .../6-mongodb-org_4.4.20_amd64.deb ...
+Unpacking mongodb-org (4.4.20) ...
+Setting up mongodb-org-shell (4.4.20) ...
+Setting up mongodb-org-database-tools-extra (4.4.20) ...
+Setting up mongodb-database-tools (100.7.0) ...
+Setting up mongodb-org-mongos (4.4.20) ...
+Setting up mongodb-org-tools (4.4.20) ...
+Setting up mongodb-org-server (4.4.20) ...
+Adding system user `mongodb' (UID 125) ...
+Adding new user `mongodb' (UID 125) with group `nogroup' ...
+Not creating home directory `/home/mongodb'.
+Adding group `mongodb' (GID 128) ...
+Done.
+Adding user `mongodb' to group `mongodb' ...
+Adding user mongodb to group mongodb
+Done.
+Setting up mongodb-org (4.4.20) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+
+rushikesh@afour-virtual-machine:~$ sudo systemctl status mongod
+[sudo] password for rushikesh:
+● mongod.service - MongoDB Database Server
+   Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset
+   Active: inactive (dead)
+     Docs: https://docs.mongodb.org/manual
+lines 1-4/4 (END)
+
+rushikesh@afour-virtual-machine:~$ sudo systemctl start mongod.service
+rushikesh@afour-virtual-machine:~$ sudo systemctl status mongod
+● mongod.service - MongoDB Database Server
+   Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset
+   Active: active (running) since Tue 2023-04-18 19:41:37 IST; 8s ago
+     Docs: https://docs.mongodb.org/manual
+ Main PID: 24318 (mongod)
+   CGroup: /system.slice/mongod.service
+           └─24318 /usr/bin/mongod --config /etc/mongod.conf
+
+Apr 18 19:41:37 afour-virtual-machine systemd[1]: Started MongoDB Database Ser
+Apr 18 19:41:37 afour-virtual-machine mongod[24318]: {"t":{"$date":"2023-04-18
+
+
+
+
+
+//List all python packages installed on the system.
+
+rushikesh@afour-virtual-machine:~$ pip list
+
+Command 'pip' not found, but can be installed with:
+
+apt install python-pip
+Please ask your administrator.
+
+rushikesh@afour-virtual-machine:~$ sudo apt install python-pip
+[sudo] password for rushikesh:
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  build-essential dpkg-dev fakeroot g++ g++-7 gcc gcc-7 libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl
+  libasan4 libatomic1 libc-dev-bin libc6 libc6-dbg libc6-dev libcilkrts5 libexpat1-dev libfakeroot libgcc-7-dev libitm1 liblsan0
+  libmpx2 libpython-all-dev libpython-dev libpython-stdlib libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0
+  linux-libc-dev make manpages-dev python python-all python-all-dev python-asn1crypto python-cffi-backend python-crypto
+  python-cryptography python-dbus python-dev python-enum34 python-gi python-idna python-ipaddress python-keyring
+  python-keyrings.alt python-minimal python-pip-whl python-pkg-resources python-secretstorage python-setuptools python-six
+  python-wheel python-xdg python2.7 python2.7-dev python2.7-minimal
+Suggested packages:
+  debian-keyring g++-multilib g++-7-multilib gcc-7-doc libstdc++6-7-dbg gcc-multilib autoconf automake libtool flex bison gcc-doc
+  gcc-7-multilib gcc-7-locales libgcc1-dbg libgomp1-dbg libitm1-dbg libatomic1-dbg libasan4-dbg liblsan0-dbg libtsan0-dbg
+  libubsan0-dbg libcilkrts5-dbg libmpx2-dbg libquadmath0-dbg glibc-doc libstdc++-7-doc make-doc python-doc python-tk
+  python-crypto-doc python-cryptography-doc python-cryptography-vectors python-dbus-dbg python-dbus-doc python-enum34-doc
+  python-gi-cairo libkf5wallet-bin gir1.2-gnomekeyring-1.0 python-fs python-gdata python-keyczar python-secretstorage-doc
+  python-setuptools-doc python2.7-doc binfmt-support
+The following NEW packages will be installed
+  build-essential dpkg-dev fakeroot g++ g++-7 gcc gcc-7 libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl
+  libasan4 libatomic1 libc-dev-bin libc6-dev libcilkrts5 libexpat1-dev libfakeroot libgcc-7-dev libitm1 liblsan0 libmpx2
+  libpython-all-dev libpython-dev libpython-stdlib libpython2.7-dev libquadmath0 libstdc++-7-dev libtsan0 libubsan0 linux-libc-dev
+  make manpages-dev python python-all python-all-dev python-asn1crypto python-cffi-backend python-crypto python-cryptography
+  python-dbus python-dev python-enum34 python-gi python-idna python-ipaddress python-keyring python-keyrings.alt python-minimal
+  python-pip python-pip-whl python-pkg-resources python-secretstorage python-setuptools python-six python-wheel python-xdg
+  python2.7 python2.7-dev python2.7-minimal
+The following packages will be upgraded:
+  libc6 libc6-dbg
+2 to upgrade, 59 to newly install, 0 to remove and 160 not to upgrade.
+Need to get 72.7 MB of archives.
+After this operation, 179 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python2.7-minimal amd64 2.7.17-1~18.04ubuntu1.11 [1,294 kB]
+Get:2 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 python-minimal amd64 2.7.15~rc1-1 [28.1 kB]
+Get:3 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 python2.7 amd64 2.7.17-1~18.04ubuntu1.11 [248 kB]
+Get:4 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 libpython-stdlib amd64 2.7.15~rc1-1 [7,620 B]
+Get:5 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 python amd64 2.7.15~rc1-1 [140 kB]
+Get:6 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libc6-dbg amd64 2.27-3ubuntu1.6 [5,162 kB]
+Get:7 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libc6 amd64 2.27-3ubuntu1.6 [2,831 kB]
+Get:7 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libc6 amd64 2.27-3ubuntu1.6 [2,831 kB]
+Get:8 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libc-dev-bin amd64 2.27-3ubuntu1.6 [71.9 kB]
+Get:9 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 linux-libc-dev amd64 4.15.0-209.220 [993 kB]
+Get:10 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libc6-dev amd64 2.27-3ubuntu1.6 [2,587 kB]
+Get:11 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libitm1 amd64 8.4.0-1ubuntu1~18.04 [27.9 kB]
+Get:12 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libatomic1 amd64 8.4.0-1ubuntu1~18.04 [9,192 B]
+Get:13 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libasan4 amd64 7.5.0-3ubuntu1~18.04 [358 kB]
+Get:14 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 liblsan0 amd64 8.4.0-1ubuntu1~18.04 [133 kB]
+Get:15 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libtsan0 amd64 8.4.0-1ubuntu1~18.04 [288 kB]
+Get:16 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libubsan0 amd64 7.5.0-3ubuntu1~18.04 [126 kB]
+Get:17 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcilkrts5 amd64 7.5.0-3ubuntu1~18.04 [42.5 kB]
+Get:18 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libmpx2 amd64 8.4.0-1ubuntu1~18.04 [11.6 kB]
+Get:19 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libquadmath0 amd64 8.4.0-1ubuntu1~18.04 [134 kB]
+Get:20 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libgcc-7-dev amd64 7.5.0-3ubuntu1~18.04 [2,378 kB]
+Get:21 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 gcc-7 amd64 7.5.0-3ubuntu1~18.04 [9,381 kB]
+Get:22 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 gcc amd64 4:7.4.0-1ubuntu2.3 [5,184 B]
+Get:23 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libstdc++-7-dev amd64 7.5.0-3ubuntu1~18.04 [1,471 kB]
+Get:24 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 g++-7 amd64 7.5.0-3ubuntu1~18.04 [9,697 kB]
+Get:25 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 g++ amd64 4:7.4.0-1ubuntu2.3 [1,568 B]
+Get:26 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 make amd64 4.1-9.1ubuntu1 [154 kB]
+Get:27 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 dpkg-dev all 1.19.0.5ubuntu2.4 [607 kB]
+Get:28 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 build-essential amd64 12.4ubuntu1 [4,758 B]
+Get:29 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 libfakeroot amd64 1.22-2ubuntu1 [25.9 kB]
+Get:30 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 fakeroot amd64 1.22-2ubuntu1 [62.3 kB]
+Get:31 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-diff-perl all 1.19.03-1 [47.6 kB]
+Get:32 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-diff-xs-perl amd64 0.04-5 [11.1 kB]
+Get:33 http://in.archive.ubuntu.com/ubuntu bionic/main amd64 libalgorithm-merge-perl all 0.08-3 [12.0 kB]
+Get:34 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libexpat1-dev amd64 2.2.5-3ubuntu0.9 [124 kB]
+Setting up libalgorithm-diff-xs-perl (0.04-5) ...
+Setting up python-enum34 (1.1.6-2) ...
+Setting up libexpat1-dev:amd64 (2.2.5-3ubuntu0.9) ...
+Setting up libpython2.7-dev:amd64 (2.7.17-1~18.04ubuntu1.11) ...
+Setting up python-dbus (1.2.6-1) ...
+Setting up python-ipaddress (1.0.17-1) ...
+Setting up python-pip (9.0.1-2.3~ubuntu1.18.04.8) ...
+Setting up python2.7-dev (2.7.17-1~18.04ubuntu1.11) ...
+Setting up python-all (2.7.15~rc1-1) ...
+Setting up libpython-dev:amd64 (2.7.15~rc1-1) ...
+Setting up python-setuptools (39.0.1-2ubuntu0.1) ...
+Setting up gcc-7 (7.5.0-3ubuntu1~18.04) ...
+Setting up g++-7 (7.5.0-3ubuntu1~18.04) ...
+Setting up python-dev (2.7.15~rc1-1) ...
+Setting up libpython-all-dev:amd64 (2.7.15~rc1-1) ...
+Setting up gcc (4:7.4.0-1ubuntu2.3) ...
+Setting up python-keyrings.alt (3.0-1) ...
+Setting up python-all-dev (2.7.15~rc1-1) ...
+Setting up python-cryptography (2.1.4-1ubuntu1.4) ...
+Setting up g++ (4:7.4.0-1ubuntu2.3) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Setting up python-secretstorage (2.3.1-2) ...
+Setting up python-keyring (10.6.0-1) ...
+Setting up build-essential (12.4ubuntu1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for gnome-menus (3.13.3-11ubuntu1.1) ...
+Processing triggers for mime-support (3.60ubuntu1) ...
+Processing triggers for desktop-file-utils (0.23-1ubuntu3.18.04.2) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.5) ...
+rushikesh@afour-virtual-machine:~$ pip list
+DEPRECATION: The default format will switch to columns in the future. You can use --format=(legacy|columns) (or define a format=(legacy|columns) in your pip.conf under the [list] section) to disable this warning.
+asn1crypto (0.24.0)
+cryptography (2.1.4)
+enum34 (1.1.6)
+idna (2.6)
+ipaddress (1.0.17)
+keyring (10.6.0)
+keyrings.alt (3.0)
+pip (9.0.1)
+pycrypto (2.6.1)
+pygobject (3.26.1)
+pyxdg (0.25)
+SecretStorage (2.3.1)
+setuptools (39.0.1)
+six (1.11.0)
+wheel (0.30.0)
+rushikesh@afour-virtual-machine:~$ pip freeze
+asn1crypto==0.24.0
+cryptography==2.1.4
+enum34==1.1.6
+idna==2.6
+ipaddress==1.0.17
+keyring==10.6.0
+keyrings.alt==3.0
+pycrypto==2.6.1
+pygobject==3.26.1
+pyxdg==0.25
+SecretStorage==2.3.1
+six==1.11.0
+
+
+
+
+//Uninstall webserver / mongodb and its dependancies
+
+rushikesh@afour-virtual-machine:~$ sudo apt purge mongo*
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Note, selecting 'mongodb18-10gen' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable-tools' for glob 'mongo*'
+Note, selecting 'mongo20-10gen' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable-database-tools-extra' for glob 'mongo*'
+Note, selecting 'mongodb' for glob 'mongo*'
+Note, selecting 'mongodb-mongosh' for glob 'mongo*'
+Note, selecting 'mongosh' for glob 'mongo*'
+Note, selecting 'mongodb-org-mongos' for glob 'mongo*'
+Note, selecting 'mongo18-10gen' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-server' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-mongos' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-enterprise-server' for glob 'mongo*'
+Note, selecting 'mongodb-org-tools' for glob 'mongo*'
+Note, selecting 'mongodb-stable' for glob 'mongo*'
+Note, selecting 'mongodb-server-core' for glob 'mongo*'
+Note, selecting 'mongodb-shell' for glob 'mongo*'
+Note, selecting 'mongodb-atlas' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable-database-tools-extra' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-enterprise-shell' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable-shell' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-database-tools-extra' for glob 'mongo*'
+Note, selecting 'mongo-10gen-enterprise' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-mongos' for glob 'mongo*'
+Note, selecting 'mongo-tools' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-enterprise-mongos' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-tools' for glob 'mongo*'
+Note, selecting 'mongodb-nightly' for glob 'mongo*'
+Note, selecting 'mongo18-10gen-server' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable-server' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable-shell' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-enterprise-tools' for glob 'mongo*'
+Note, selecting 'mongo20-10gen-server' for glob 'mongo*'
+Note, selecting 'mongodb-database-tools' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-org-shell' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-tools' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise' for glob 'mongo*'
+Note, selecting 'mongodb-server' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-tools-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable-mongos' for glob 'mongo*'
+Note, selecting 'mongodb-org-database-tools-extra' for glob 'mongo*'
+Note, selecting 'mongodb-dev' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-enterprise-server' for glob 'mongo*'
+Note, selecting 'mongodb-10gen' for glob 'mongo*'
+Note, selecting 'mongodb-mongosh-shared-openssl11' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-enterprise' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-shell' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-tools' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable-server' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-enterprise-shell' for glob 'mongo*'
+Note, selecting 'mongodb-mongosh-shared-openssl3' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-mongos' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-server' for glob 'mongo*'
+Note, selecting 'mongodb-org-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-enterprise-mongos' for glob 'mongo*'
+Note, selecting 'mongocli' for glob 'mongo*'
+Note, selecting 'mongodb-org-tools-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-shell' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-enterprise' for glob 'mongo*'
+Note, selecting 'mongodb-org' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable-mongos' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable' for glob 'mongo*'
+Note, selecting 'mongodb-clients' for glob 'mongo*'
+Note, selecting 'mongo-10gen-server' for glob 'mongo*'
+Note, selecting 'mongo-10gen-enterprise-server' for glob 'mongo*'
+Note, selecting 'mongodb-org-server' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-enterprise-tools' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-server' for glob 'mongo*'
+Note, selecting 'mongodb-enterprise-unstable-tools' for glob 'mongo*'
+Note, selecting 'mongodb-10gen-unstable-enterprise' for glob 'mongo*'
+Note, selecting 'mongodb-atlas-cli' for glob 'mongo*'
+Note, selecting 'mongo-10gen-unstable-shell' for glob 'mongo*'
+Note, selecting 'mongo-10gen' for glob 'mongo*'
+Note, selecting 'mongodb20-10gen' for glob 'mongo*'
+Package 'mongo-10gen' is not installed, so not removed
+Package 'mongo-10gen-enterprise' is not installed, so not removed
+Package 'mongo-10gen-enterprise-server' is not installed, so not removed
+Package 'mongo-10gen-server' is not installed, so not removed
+Package 'mongo-10gen-unstable' is not installed, so not removed
+Package 'mongo-10gen-unstable-enterprise' is not installed, so not removed
+Package 'mongo-10gen-unstable-enterprise-mongos' is not installed, so not removed
+Package 'mongo-10gen-unstable-enterprise-server' is not installed, so not removed
+Package 'mongo-10gen-unstable-enterprise-shell' is not installed, so not removed
+Package 'mongo-10gen-unstable-enterprise-tools' is not installed, so not removed
+Package 'mongo-10gen-unstable-mongos' is not installed, so not removed
+Package 'mongo-10gen-unstable-server' is not installed, so not removed
+Package 'mongo-10gen-unstable-shell' is not installed, so not removed
+Package 'mongo-10gen-unstable-tools' is not installed, so not removed
+Package 'mongo18-10gen' is not installed, so not removed
+Package 'mongo18-10gen-server' is not installed, so not removed
+Package 'mongo20-10gen' is not installed, so not removed
+Package 'mongo20-10gen-server' is not installed, so not removed
+Package 'mongodb-10gen' is not installed, so not removed
+Package 'mongodb-10gen-enterprise' is not installed, so not removed
+Package 'mongodb-10gen-unstable' is not installed, so not removed
+Package 'mongodb-10gen-unstable-enterprise' is not installed, so not removed
+Package 'mongodb-10gen-unstable-enterprise-mongos' is not installed, so not removed
+Package 'mongodb-10gen-unstable-enterprise-server' is not installed, so not removed
+Package 'mongodb-10gen-unstable-enterprise-shell' is not installed, so not removed
+Package 'mongodb-10gen-unstable-enterprise-tools' is not installed, so not removed
+Package 'mongodb-10gen-unstable-mongos' is not installed, so not removed
+Package 'mongodb-10gen-unstable-server' is not installed, so not removed
+Package 'mongodb-10gen-unstable-shell' is not installed, so not removed
+Package 'mongodb-10gen-unstable-tools' is not installed, so not removed
+Package 'mongodb-enterprise' is not installed, so not removed
+Package 'mongodb-enterprise-database-tools-extra' is not installed, so not removed
+Package 'mongodb-enterprise-mongos' is not installed, so not removed
+Package 'mongodb-enterprise-server' is not installed, so not removed
+Package 'mongodb-enterprise-shell' is not installed, so not removed
+Package 'mongodb-enterprise-tools' is not installed, so not removed
+Package 'mongodb-enterprise-unstable' is not installed, so not removed
+Package 'mongodb-enterprise-unstable-database-tools-extra' is not installed, so not removed
+Package 'mongodb-enterprise-unstable-mongos' is not installed, so not removed
+Package 'mongodb-enterprise-unstable-server' is not installed, so not removed
+Package 'mongodb-enterprise-unstable-shell' is not installed, so not removed
+Package 'mongodb-enterprise-unstable-tools' is not installed, so not removed
+Package 'mongodb-nightly' is not installed, so not removed
+Package 'mongodb' is not installed, so not removed
+Package 'mongodb-clients' is not installed, so not removed
+Package 'mongodb-server' is not installed, so not removed
+Package 'mongodb-server-core' is not installed, so not removed
+Package 'mongodb-atlas-cli' is not installed, so not removed
+Package 'mongodb-atlas' is not installed, so not removed
+Package 'mongocli' is not installed, so not removed
+Package 'mongodb-mongosh-shared-openssl3' is not installed, so not removed
+Package 'mongodb-mongosh-shared-openssl11' is not installed, so not removed
+Package 'mongodb-mongosh' is not installed, so not removed
+Package 'mongosh' is not installed, so not removed
+The following packages will be REMOVED
+  mongodb-database-tools* mongodb-org* mongodb-org-database-tools-extra* mongodb-org-mongos* mongodb-org-server* mongodb-org-shell*
+  mongodb-org-tools*
+0 to upgrade, 0 to newly install, 7 to remove and 160 not to upgrade.
+After this operation, 203 MB disk space will be freed.
+Do you want to continue? [Y/n] y
+(Reading database ... 173657 files and directories currently installed.)
+Removing mongodb-org (4.4.20) ...
+Removing mongodb-org-tools (4.4.20) ...
+Removing mongodb-database-tools (100.7.0) ...
+Removing mongodb-org-database-tools-extra (4.4.20) ...
+Removing mongodb-org-mongos (4.4.20) ...
+Removing mongodb-org-server (4.4.20) ...
+Removing mongodb-org-shell (4.4.20) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+(Reading database ... 173611 files and directories currently installed.)
+Purging configuration files for mongodb-org (4.4.20) ...
+Purging configuration files for mongodb-org-server (4.4.20) ...
+
+rushikesh@afour-virtual-machine:~$ dpkg -l | grep mongo
+rushikesh@afour-virtual-machine:~$
+
+
+
+
+
+
+//Install specific version of webserver / mongodb and list down running services.
+
+rushikesh@afour-virtual-machine:~$ sudo apt-get install gnupg
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+gnupg is already the newest version (2.2.4-1ubuntu1.6).
+gnupg set to manually installed.
+0 to upgrade, 0 to newly install, 0 to remove and 160 not to upgrade.
+rushikesh@afour-virtual-machine:~$ curl -fsSL https://pgp.mongodb.com/server-4.4.asc | \
+>    sudo gpg -o /usr/share/keyrings/mongodb-server-4.4.gpg \
+>    --dearmor
+gpg: WARNING: unsafe ownership on homedir '/home/rushikesh/.gnupg'
+gpg: signal Interrupt caught ... exiting
+
+rushikesh@afour-virtual-machine:~$ echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse
+rushikesh@afour-virtual-machine:~$ sudo apt-get update
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Hit:2 https://dl.google.com/linux/chrome/deb stable InRelease
+Hit:3 http://in.archive.ubuntu.com/ubuntu bionic InRelease
+Get:4 http://in.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Ign:5 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 InRelease
+Hit:6 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release
+Err:7 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release.gpg
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+Get:8 http://in.archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Fetched 261 kB in 3s (91.1 kB/s)
+Reading package lists... Done
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+W: Failed to fetch https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/4.4/Release.gpg  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+rushikesh@afour-virtual-machine:~$ sudo apt-get install -y mongodb-org=4.4.20 mongodb-org-server=4.4.20 mongodb-org-shell=4.4.20 mongodb-org-mongos=4.4.20 mongodb-org-tools=4.4.20
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  mongodb-database-tools mongodb-org-database-tools-extra
+The following NEW packages will be installed
+  mongodb-database-tools mongodb-org mongodb-org-database-tools-extra
+  mongodb-org-mongos mongodb-org-server mongodb-org-shell mongodb-org-tools
+0 to upgrade, 7 to newly install, 0 to remove and 160 not to upgrade.
+Need to get 101 MB of archives.
+After this operation, 203 MB of additional disk space will be used.
+Get:1 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-database-tools amd64 100.7.0 [50.6 MB]
+Get:2 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org-shell amd64 4.4.20 [13.4 MB]
+Get:3 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org-server amd64 4.4.20 [20.8 MB]
+Get:4 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org-mongos amd64 4.4.20 [16.1 MB]
+Get:5 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org-database-tools-extra amd64 4.4.20 [7,752 B]
+Get:6 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org-tools amd64 4.4.20 [2,896 B]
+Get:7 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4/multiverse amd64 mongodb-org amd64 4.4.20 [3,524 B]
+Fetched 101 MB in 22s (4,493 kB/s)
+Selecting previously unselected package mongodb-database-tools.
+(Reading database ... 173611 files and directories currently installed.)
+Preparing to unpack .../0-mongodb-database-tools_100.7.0_amd64.deb ...
+Unpacking mongodb-database-tools (100.7.0) ...
+Selecting previously unselected package mongodb-org-shell.
+Preparing to unpack .../1-mongodb-org-shell_4.4.20_amd64.deb ...
+Unpacking mongodb-org-shell (4.4.20) ...
+Selecting previously unselected package mongodb-org-server.
+Preparing to unpack .../2-mongodb-org-server_4.4.20_amd64.deb ...
+Unpacking mongodb-org-server (4.4.20) ...
+Selecting previously unselected package mongodb-org-mongos.
+Preparing to unpack .../3-mongodb-org-mongos_4.4.20_amd64.deb ...
+Unpacking mongodb-org-mongos (4.4.20) ...
+Selecting previously unselected package mongodb-org-database-tools-extra.
+Preparing to unpack .../4-mongodb-org-database-tools-extra_4.4.20_amd64.deb ...
+Unpacking mongodb-org-database-tools-extra (4.4.20) ...
+Selecting previously unselected package mongodb-org-tools.
+Preparing to unpack .../5-mongodb-org-tools_4.4.20_amd64.deb ...
+Unpacking mongodb-org-tools (4.4.20) ...
+Selecting previously unselected package mongodb-org.
+Preparing to unpack .../6-mongodb-org_4.4.20_amd64.deb ...
+Unpacking mongodb-org (4.4.20) ...
+Setting up mongodb-org-shell (4.4.20) ...
+Setting up mongodb-org-database-tools-extra (4.4.20) ...
+Setting up mongodb-database-tools (100.7.0) ...
+Setting up mongodb-org-mongos (4.4.20) ...
+Setting up mongodb-org-tools (4.4.20) ...
+Setting up mongodb-org-server (4.4.20) ...
+Setting up mongodb-org (4.4.20) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+rushikesh@afour-virtual-machine:~$ sudo systemctl start mongod
+rushikesh@afour-virtual-machine:~$ sudo systemctl status mongod
+● mongod.service - MongoDB Database Server
+   Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset
+   Active: active (running) since Tue 2023-04-18 19:41:37 IST; 2h 41min ago
+     Docs: https://docs.mongodb.org/manual
+ Main PID: 24318 (mongod)
+   CGroup: /system.slice/mongod.service
+           └─24318 /usr/bin/mongod --config /etc/mongod.conf
+
+Apr 18 19:41:37 afour-virtual-machine systemd[1]: Started MongoDB Database Ser
+Apr 18 19:41:37 afour-virtual-machine mongod[24318]: {"t":{"$date":"2023-04-18
+Apr 18 22:02:48 afour-virtual-machine systemd[1]: mongod.service: Current comm
+
+rushikesh@afour-virtual-machine:~$ mongod --version
+db version v4.4.20
+Build Info: {
+    "version": "4.4.20",
+    "gitVersion": "5b82316e5017ff76646fd12878079620f9ad4be7",
+    "openSSLVersion": "OpenSSL 1.1.1  11 Sep 2018",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "environment": {
+        "distmod": "ubuntu1804",
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
+
+rushikesh@afour-virtual-machine:~$ sudo systemctl status mongod
+● mongod.service - MongoDB Database Server
+   Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset
+   Active: active (running) since Tue 2023-04-18 19:41:37 IST; 2h 48min ago
+     Docs: https://docs.mongodb.org/manual
+ Main PID: 24318 (mongod)
+   CGroup: /system.slice/mongod.service
+           └─24318 /usr/bin/mongod --config /etc/mongod.conf
+
+Apr 18 19:41:37 afour-virtual-machine systemd[1]: Started MongoDB Database Ser
+Apr 18 19:41:37 afour-virtual-machine mongod[24318]: {"t":{"$date":"2023-04-18
+Apr 18 22:02:48 afour-virtual-machine systemd[1]: mongod.service: Current comm
+lines 1-11/11 (END)
+
+
+
+
+//After installing specific version, now perform update for respective web-server/mongodb
+
+rushikesh@afour-virtual-machine:~$ sudo apt update
+Hit:1 https://dl.google.com/linux/chrome/deb stable InRelease
+Get:2 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Ign:3 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 InRelease
+Hit:4 http://in.archive.ubuntu.com/ubuntu bionic InRelease
+Get:5 http://in.archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Hit:6 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release
+Err:7 https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release.gpg
+  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/main amd64 DEP-11 Metadata [76.9 kB]
+Get:9 http://in.archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Get:10 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 DEP-11 Metadata [62.5 kB]
+Get:11 http://in.archive.ubuntu.com/ubuntu bionic-updates/main amd64 DEP-11 Metadata [297 kB]
+Get:12 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 DEP-11 Metadata [2,464 B]
+Get:13 http://in.archive.ubuntu.com/ubuntu bionic-updates/universe amd64 DEP-11 Metadata [303 kB]
+Get:14 http://in.archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 DEP-11 Metadata [2,468 B]
+Get:15 http://in.archive.ubuntu.com/ubuntu bionic-backports/main amd64 DEP-11 Metadata [8,096 B]
+Get:16 http://in.archive.ubuntu.com/ubuntu bionic-backports/universe amd64 DEP-11 Metadata [10.0 kB]
+Fetched 1,023 kB in 2s (503 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+160 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: An error occurred during the signature verification. The repository is not updated and the previous index files will be used. GPG error: https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 Release: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+W: Failed to fetch https://repo.mongodb.org/apt/ubuntu/dists/bionic/mongodb-org/4.4/Release.gpg  The following signatures couldn't be verified because the public key is not available: NO_PUBKEY 656408E390CFB1F5
+W: Some index files failed to download. They have been ignored, or old ones used instead.

@@ -1,0 +1,200 @@
+Symbolic links assignments, 
+
+1) Create a soft link for ./testfolder/testfile1.txt to current_username_testfile1_copy1.txt and current_username_testfile1_copy2.txt
+   - Now modify the contents in current_username_testfile_copy1.txt 
+   - Delete the file current_username_testfile1_copy1.txt and check status of remaining soft links and original file (ls -lrth)
+   - Now delete the original file and check the status of soft link created using (ls -lrth)
+
+
+2) Create a hard link for ./testfolder/testfile2.txt to current_username_testfile2_copy1.txt and current_username_testfile2_copy2.txt
+   - Now modify the contents in current_username_testfile_copy1.txt 
+   - Delete the file current_username_testfile2_copy1.txt and check status of remaining soft links and original file (ls -lrth)  
+
+3) Find such soft links in /usr/bin directory and mention at-least 5 executable/binaries names and their original location.
+
+ 
+
+
+//Create a soft link for ./testfolder/testfile1.txt to current_username_testfile1_copy1.txt and current_username_testfile1_copy2.txt
+
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+foo2.txt  foo3.txt  foo.txt  md5sums.txt  MoreUsers.txt  rsa_key_pair  testfile1.txt  testfile2.txt  testfolder.tar
+rushikesh@afour-virtual-machine:~/testfolder$ ln -s testfile1.txt rushikesh_testfile1_copy1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ln -s testfile1.txt rushikesh_testfile1_copy2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+foo2.txt  md5sums.txt    rushikesh_testfile1_copy1.txt  testfile2.txt
+foo3.txt  MoreUsers.txt  rushikesh_testfile1_copy2.txt  testfolder.tar
+foo.txt   rsa_key_pair   testfile1.txt
+
+
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ cat rushikesh_testfile1_copy1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+
+
+//Now modify the contents in current_username_testfile_copy1.txt 
+
+rushikesh@afour-virtual-machine:~/testfolder$ nano rushikesh_testfile1_copy1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat rushikesh_testfile1_copy1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+This line contains modified content
+
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+This line contains modified content
+rushikesh@afour-virtual-machine:~/testfolder$ ls -lrth
+total 33M
+-rw-r--r-- 1 rushikesh rushikesh  10K Apr  6 17:15 testfolder.tar
+-rw-r--r-- 1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-rw-r-- 1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+-rw-rw-r-- 1 rushikesh rushikesh  111 Apr 11 16:48 testfile2.txt
+drwxrwxr-x 2 rushikesh rushikesh 4.0K Apr 12 18:04 rsa_key_pair
+-rw------- 1 rushikesh rushikesh  394 Apr 12 21:11 MoreUsers.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy1.txt -> testfile1.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy2.txt -> testfile1.txt
+-rw-rw-r-- 1 rushikesh rushikesh  152 Apr 13 18:34 testfile1.txt
+
+
+
+//Delete the file current_username_testfile1_copy1.txt and check status of remaining soft links and original file (ls -lrth)
+
+rushikesh@afour-virtual-machine:~/testfolder$ rm rushikesh_testfile1_copy1.txt
+
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+foo2.txt  md5sums.txt    rushikesh_testfile1_copy2.txt  testfolder.tar
+foo3.txt  MoreUsers.txt  testfile1.txt
+foo.txt   rsa_key_pair   testfile2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls -lrth
+total 33M
+-rw-r--r-- 1 rushikesh rushikesh  10K Apr  6 17:15 testfolder.tar
+-rw-r--r-- 1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-rw-r-- 1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+-rw-rw-r-- 1 rushikesh rushikesh  111 Apr 11 16:48 testfile2.txt
+drwxrwxr-x 2 rushikesh rushikesh 4.0K Apr 12 18:04 rsa_key_pair
+-rw------- 1 rushikesh rushikesh  394 Apr 12 21:11 MoreUsers.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy2.txt -> testfile1.txt
+-rw-rw-r-- 1 rushikesh rushikesh  152 Apr 13 18:34 testfile1.txt
+
+
+
+//Now delete the original file and check the status of soft link created using (ls -lrth)
+
+rushikesh@afour-virtual-machine:~/testfolder$ rm testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+foo2.txt  md5sums.txt    rushikesh_testfile1_copy2.txt
+foo3.txt  MoreUsers.txt  testfile2.txt
+foo.txt   rsa_key_pair   testfolder.tar
+rushikesh@afour-virtual-machine:~/testfolder$ ls -lrth
+total 33M
+-rw-r--r-- 1 rushikesh rushikesh  10K Apr  6 17:15 testfolder.tar
+-rw-r--r-- 1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-rw-r-- 1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+-rw-rw-r-- 1 rushikesh rushikesh  111 Apr 11 16:48 testfile2.txt
+drwxrwxr-x 2 rushikesh rushikesh 4.0K Apr 12 18:04 rsa_key_pair
+-rw------- 1 rushikesh rushikesh  394 Apr 12 21:11 MoreUsers.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy2.txt -> testfile1.txt
+
+
+
+
+//Create a hard link for ./testfolder/testfile2.txt to current_username_testfile2_copy1.txt and current_username_testfile2_copy2.txt
+
+rushikesh@afour-virtual-machine:~/testfolder$ ln testfile2.txt rushikesh_testfile2_copy1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ln testfile2.txt rushikesh_testfile2_copy2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+foo2.txt  md5sums.txt    rushikesh_testfile1_copy2.txt  testfile2.txt
+foo3.txt  MoreUsers.txt  rushikesh_testfile2_copy1.txt  testfolder.tar
+foo.txt   rsa_key_pair   rushikesh_testfile2_copy2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls -lrth
+total 33M
+-rw-r--r-- 1 rushikesh rushikesh  10K Apr  6 17:15 testfolder.tar
+-rw-r--r-- 1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-rw-r-- 1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+-rw-rw-r-- 3 rushikesh rushikesh  111 Apr 11 16:48 testfile2.txt
+-rw-rw-r-- 3 rushikesh rushikesh  111 Apr 11 16:48 rushikesh_testfile2_copy2.txt
+-rw-rw-r-- 3 rushikesh rushikesh  111 Apr 11 16:48 rushikesh_testfile2_copy1.txt
+drwxrwxr-x 2 rushikesh rushikesh 4.0K Apr 12 18:04 rsa_key_pair
+-rw------- 1 rushikesh rushikesh  394 Apr 12 21:11 MoreUsers.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy2.txt -> testfile1.txt
+
+
+
+
+//Now modify the contents in current_username_testfile_copy1.txt 
+
+cat: rushikesh_testfile1_copy1.txt: No such file or directory
+rushikesh@afour-virtual-machine:~/testfolder$ cat rushikesh_testfile2_copy1.tx
+t
+Name : Mayur Jadhav
+Age : 43
+Mobile No : 7727514024
+Address : N-305, Swapnapoorti Society, Akurdi, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ nano rushikesh_testfile2_copy1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat rushikesh_testfile2_copy1.txt
+Name : Mayur Jadhav
+Age : 43
+Mobile No : 7727514024
+Address : N-305, Swapnapoorti Society, Akurdi, Pune 411044
+This is modified content
+
+
+
+
+//Delete the file current_username_testfile1_copy1.txt and check status of remaining soft links and original file (ls -lrth)
+
+rushikesh@afour-virtual-machine:~/testfolder$ rm rushikesh_testfile2_copy1.txt
+
+rushikesh@afour-virtual-machine:~/testfolder$ ls -lrth
+total 33M
+-rw-r--r-- 1 rushikesh rushikesh  10K Apr  6 17:15 testfolder.tar
+-rw-r--r-- 1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-rw-r-- 1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-rw-r-- 1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+drwxrwxr-x 2 rushikesh rushikesh 4.0K Apr 12 18:04 rsa_key_pair
+-rw------- 1 rushikesh rushikesh  394 Apr 12 21:11 MoreUsers.txt
+lrwxrwxrwx 1 rushikesh rushikesh   13 Apr 13 18:31 rushikesh_testfile1_copy2.txt -> testfile1.txt
+-rw-rw-r-- 2 rushikesh rushikesh  137 Apr 13 19:08 testfile2.txt
+-rw-rw-r-- 2 rushikesh rushikesh  137 Apr 13 19:08 rushikesh_testfile2_copy2.txt
+
+
+
+//Find such soft links in /usr/bin directory and mention at-least 5 executable/binaries names and their original location.
+
+rushikesh@afour-virtual-machine:/$ cd /usr/bin
+rushikesh@afour-virtual-machine:/usr/bin$ ls -lrth
+total 154M
+
+1. lrwxrwxrwx 1 root root        6 May 11  2020  ctstat -> lnstat
+
+2. lrwxrwxrwx 1 root root       25 Jun  9  2020  convert -> /etc/alternatives/con
+
+3. lrwxrwxrwx 1 root root       31 Jun  9  2020  foomatic-rip -> ../lib/cups/filter/foomatic-rip
+
+4. lrwxrwxrwx 1 root root        6 Jun  9  2020  mmd -> mtools
+
+5. lrwxrwxrwx 1 root root       10 Jun  9  2020  which -> /bin/which

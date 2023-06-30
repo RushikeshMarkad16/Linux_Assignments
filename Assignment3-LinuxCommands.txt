@@ -1,0 +1,357 @@
+Linux basic commands
+1.  Check for running processes and filter processes running for perticular USER_NAME
+2.  Create files/directories and perform file operations.
+3.  Check for disk space usage, currently mounted devices
+4.  Check for current enviornment variables configured. $PATH and env
+5.  Create soft-links for files and check multiple read/write/delete operations
+
+
+Capture the result/output for the same. 
+
+
+
+//Check for running processes and filter processes running for perticular USER_NAME
+
+rushikesh@afour-virtual-machine:~$ ps
+  PID TTY          TIME CMD
+20095 pts/3    00:00:00 bash
+20971 pts/3    00:00:00 ps
+
+rushikesh@afour-virtual-machine:~$ ps -u rushikesh
+  PID TTY          TIME CMD
+ 5393 ?        00:00:00 systemd
+ 5398 ?        00:00:00 (sd-pam)
+ 8868 ?        00:00:00 dbus-daemon
+ 8869 ?        00:00:00 ibus-daemon
+ 8872 ?        00:00:00 gvfsd
+ 8877 ?        00:00:00 gvfsd-fuse
+ 8892 ?        00:00:00 ibus-dconf
+ 8896 ?        00:00:00 ibus-portal
+15699 ?        00:00:00 gnome-session-b
+15700 ?        00:01:05 Xorg
+15709 ?        00:00:00 xrdp-chansrv
+15759 ?        00:00:00 ssh-agent
+15773 ?        00:00:00 at-spi-bus-laun
+15778 ?        00:00:00 dbus-daemon
+15780 ?        00:00:00 at-spi2-registr
+15794 ?        00:00:00 gnome-keyring-d
+15803 ?        00:06:37 gnome-shell
+15814 ?        00:00:23 pulseaudio
+15828 ?        00:00:00 xdg-permission-
+15833 ?        00:00:00 gnome-shell-cal
+15839 ?        00:00:00 evolution-sourc
+15846 ?        00:00:00 goa-daemon
+15855 ?        00:00:00 gvfs-udisks2-vo
+15860 ?        00:00:00 gvfs-goa-volume
+15869 ?        00:00:00 goa-identity-se
+15874 ?        00:00:00 gvfs-mtp-volume
+15878 ?        00:00:00 gvfs-afc-volume
+15883 ?        00:00:00 gvfs-gphoto2-vo
+15887 ?        00:00:00 gsd-power
+15888 ?        00:00:00 gsd-print-notif
+15890 ?        00:00:00 gsd-rfkill
+15896 ?        00:00:00 gsd-screensaver
+15901 ?        00:00:00 gsd-sharing
+15907 ?        00:00:00 gsd-smartcard
+15910 ?        00:00:00 gsd-xsettings
+15914 ?        00:00:00 gsd-sound
+15917 ?        00:00:00 gsd-wacom
+15921 ?        00:00:00 gsd-a11y-settin
+15926 ?        00:00:01 gsd-color
+15928 ?        00:00:00 gsd-clipboard
+15929 ?        00:00:00 gsd-housekeepin
+15930 ?        00:00:00 gsd-datetime
+15934 ?        00:00:00 gsd-media-keys
+15935 ?        00:00:00 gsd-keyboard
+15944 ?        00:00:00 gsd-mouse
+15978 ?        00:00:00 gsd-printer
+15986 ?        00:00:00 gsd-disk-utilit
+15994 ?        00:00:00 evolution-calen
+16016 ?        00:00:00 evolution-calen
+16026 ?        00:00:00 dconf-service
+16028 ?        00:00:00 evolution-addre
+16040 ?        00:00:00 evolution-addre
+16046 ?        00:00:00 ibus-engine-sim
+16091 ?        00:00:00 update-notifier
+16093 ?        00:00:03 gnome-software
+16210 ?        00:00:00 deja-dup-monito
+16235 ?        00:00:11 gnome-terminal-
+16242 pts/1    00:00:00 bash
+16327 pts/2    00:00:00 bash
+16495 ?        00:00:00 gvfsd-metadata
+16577 ?        00:00:00 gvfsd-trash
+17180 ?        00:00:00 xdg-desktop-por
+17184 ?        00:00:00 xdg-document-po
+17193 ?        00:00:00 xdg-desktop-por
+19420 ?        00:00:00 gvfsd-network
+19442 ?        00:00:00 gvfsd-smb-brows
+19456 ?        00:00:00 gvfsd-dnssd
+20095 pts/3    00:00:00 bash
+20146 ?        00:00:02 nautilus
+20313 ?        00:00:00 zeitgeist-daemo
+21052 pts/3    00:00:00 ps
+
+
+
+//Create files/directories and perform file operations.
+
+rushikesh@afour-virtual-machine:~$ pwd
+/home/rushikesh
+rushikesh@afour-virtual-machine:~$ mkdir Assignment3
+rushikesh@afour-virtual-machine:~$ ls
+ls: cannot access 'thinclient_drives': Transport endpoint is not connected
+Assignment3  examples.desktop                        Templates
+Assignments  google-chrome-stable_current_amd64.deb  testfolder
+demo1.txt    Music                                   thinclient_drives
+Desktop      Pictures                                Videos
+Documents    Practice_Commands
+Downloads    Public
+rushikesh@afour-virtual-machine:~$ cd Assignment3
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+rushikesh@afour-virtual-machine:~/Assignment3$ touch demo1.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ touch demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ vi demo1.txt 
+rushikesh@afour-virtual-machine:~/Assignment3$ vi demo2.txt 
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1.txt  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ ls -a
+.  ..  demo1.txt  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ cat demo1.txt 
+This is content of demo1 file.
+rushikesh@afour-virtual-machine:~/Assignment3$ cat demo2.txt 
+This is the content of demo2 file.
+rushikesh@afour-virtual-machine:~/Assignment3$ cp demo1.txt demo1copy.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1copy.txt  demo1.txt  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ cat demo1copy.txt 
+This is content of demo1 file.
+rushikesh@afour-virtual-machine:~/Assignment3$ rm demo1copy.txt 
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1.txt  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ mv demo1.txt demo1_rename
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ cat demo1_rename 
+This is content of demo1 file.
+rushikesh@afour-virtual-machine:~/Assignment3$ mkdir Test
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2.txt  Test
+rushikesh@afour-virtual-machine:~/Assignment3$ rmdir Test
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ cd ..
+rushikesh@afour-virtual-machine:~$ find * -name demo2.txt
+Assignment3/demo2.txt
+find: ‘thinclient_drives’: Transport endpoint is not connected
+rushikesh@afour-virtual-machine:~$ cd Assignment3/
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ cat demo2.txt | grep "content"
+This is the content of demo2 file.
+rushikesh@afour-virtual-machine:~/Assignment3$ sort demo2.txt 
+This is the content of demo2 file.
+
+
+
+
+//Check for disk space usage, currently mounted devices
+
+rushikesh@afour-virtual-machine:~$ df
+df: /home/rushikesh/thinclient_drives: Transport endpoint is not connected
+Filesystem     1K-blocks    Used Available Use% Mounted on
+udev             1991020       0   1991020   0% /dev
+tmpfs             403064    2340    400724   1% /run
+/dev/sda1       51341792 9240348  39463724  19% /
+tmpfs            2015316   18412   1996904   1% /dev/shm
+tmpfs               5120       0      5120   0% /run/lock
+tmpfs            2015316       0   2015316   0% /sys/fs/cgroup
+/dev/loop0          3840    3840         0 100% /snap/gnome-system-monitor/127
+/dev/loop1         15104   15104         0 100% /snap/gnome-characters/399
+/dev/loop3          4352    4352         0 100% /snap/gnome-calculator/544
+/dev/loop5          1024    1024         0 100% /snap/gnome-logs/81
+/dev/loop4        164096  164096         0 100% /snap/gnome-3-28-1804/116
+/dev/loop6         46080   46080         0 100% /snap/gtk-common-themes/1440
+/dev/loop7         56064   56064         0 100% /snap/core18/1668
+tmpfs             403060      28    403032   1% /run/user/121
+/dev/loop8         56960   56960         0 100% /snap/core18/2721
+/dev/loop9        119680  119680         0 100% /snap/core/14946
+/dev/loop10        74752   74752         0 100% /snap/core22/607
+/dev/loop11          128     128         0 100% /snap/bare/5
+/dev/loop12         1536    1536         0 100% /snap/gnome-system-monitor/181
+/dev/loop13          768     768         0 100% /snap/gnome-logs/115
+/dev/loop14         2176    2176         0 100% /snap/gnome-calculator/926
+/dev/loop15          512     512         0 100% /snap/gnome-characters/781
+/dev/loop16        93952   93952         0 100% /snap/gtk-common-themes/1535
+/dev/loop17       168832  168832         0 100% /snap/gnome-3-28-1804/194
+/dev/loop18       471552  471552         0 100% /snap/gnome-42-2204/68
+tmpfs             403060      44    403016   1% /run/user/1000
+tmpfs             403060      96    402964   1% /run/user/1002
+rushikesh@afour-virtual-machine:~$ df -h
+df: /home/rushikesh/thinclient_drives: Transport endpoint is not connected
+Filesystem      Size  Used Avail Use% Mounted on
+udev            1.9G     0  1.9G   0% /dev
+tmpfs           394M  2.3M  392M   1% /run
+/dev/sda1        49G  8.9G   38G  19% /
+tmpfs           2.0G   18M  2.0G   1% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           2.0G     0  2.0G   0% /sys/fs/cgroup
+/dev/loop0      3.8M  3.8M     0 100% /snap/gnome-system-monitor/127
+/dev/loop1       15M   15M     0 100% /snap/gnome-characters/399
+/dev/loop3      4.3M  4.3M     0 100% /snap/gnome-calculator/544
+/dev/loop5      1.0M  1.0M     0 100% /snap/gnome-logs/81
+/dev/loop4      161M  161M     0 100% /snap/gnome-3-28-1804/116
+/dev/loop6       45M   45M     0 100% /snap/gtk-common-themes/1440
+/dev/loop7       55M   55M     0 100% /snap/core18/1668
+tmpfs           394M   28K  394M   1% /run/user/121
+/dev/loop8       56M   56M     0 100% /snap/core18/2721
+/dev/loop9      117M  117M     0 100% /snap/core/14946
+/dev/loop10      73M   73M     0 100% /snap/core22/607
+/dev/loop11     128K  128K     0 100% /snap/bare/5
+/dev/loop12     1.5M  1.5M     0 100% /snap/gnome-system-monitor/181
+/dev/loop13     768K  768K     0 100% /snap/gnome-logs/115
+/dev/loop14     2.2M  2.2M     0 100% /snap/gnome-calculator/926
+/dev/loop15     512K  512K     0 100% /snap/gnome-characters/781
+/dev/loop16      92M   92M     0 100% /snap/gtk-common-themes/1535
+/dev/loop17     165M  165M     0 100% /snap/gnome-3-28-1804/194
+/dev/loop18     461M  461M     0 100% /snap/gnome-42-2204/68
+tmpfs           394M   44K  394M   1% /run/user/1000
+tmpfs           394M   96K  394M   1% /run/user/1002
+
+
+
+
+rushikesh@afour-virtual-machine:~$ mount
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,nosuid,relatime,size=1991020k,nr_inodes=497755,mode=755)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,noexec,relatime,size=403064k,mode=755)
+/dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)
+cgroup on /sys/fs/cgroup/unified type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/rdma type cgroup (rw,nosuid,nodev,noexec,relatime,rdma)
+cgroup on /sys/fs/cgroup/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+cgroup on /sys/fs/cgroup/cpu,cpuacct type cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)
+cgroup on /sys/fs/cgroup/hugetlb type cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)
+cgroup on /sys/fs/cgroup/perf_event type cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)
+cgroup on /sys/fs/cgroup/devices type cgroup (rw,nosuid,nodev,noexec,relatime,devices)
+cgroup on /sys/fs/cgroup/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)
+cgroup on /sys/fs/cgroup/pids type cgroup (rw,nosuid,nodev,noexec,relatime,pids)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+cgroup on /sys/fs/cgroup/freezer type cgroup (rw,nosuid,nodev,noexec,relatime,freezer)
+cgroup on /sys/fs/cgroup/net_cls,net_prio type cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=26,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=13907)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=2M)
+mqueue on /dev/mqueue type mqueue (rw,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,relatime)
+configfs on /sys/kernel/config type configfs (rw,relatime)
+/var/lib/snapd/snaps/gnome-system-monitor_127.snap on /snap/gnome-system-monitor/127 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-characters_399.snap on /snap/gnome-characters/399 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-calculator_544.snap on /snap/gnome-calculator/544 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-logs_81.snap on /snap/gnome-logs/81 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-3-28-1804_116.snap on /snap/gnome-3-28-1804/116 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gtk-common-themes_1440.snap on /snap/gtk-common-themes/1440 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/core18_1668.snap on /snap/core18/1668 type squashfs (ro,nodev,relatime,x-gdu.hide)
+tmpfs on /run/user/121 type tmpfs (rw,nosuid,nodev,relatime,size=403060k,mode=700,uid=121,gid=125)
+/var/lib/snapd/snaps/core18_2721.snap on /snap/core18/2721 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/core_14946.snap on /snap/core/14946 type squashfs (ro,nodev,relatime,x-gdu.hide)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,relatime)
+/var/lib/snapd/snaps/core22_607.snap on /snap/core22/607 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/bare_5.snap on /snap/bare/5 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-system-monitor_181.snap on /snap/gnome-system-monitor/181 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-logs_115.snap on /snap/gnome-logs/115 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-calculator_926.snap on /snap/gnome-calculator/926 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-characters_781.snap on /snap/gnome-characters/781 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gtk-common-themes_1535.snap on /snap/gtk-common-themes/1535 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-3-28-1804_194.snap on /snap/gnome-3-28-1804/194 type squashfs (ro,nodev,relatime,x-gdu.hide)
+/var/lib/snapd/snaps/gnome-42-2204_68.snap on /snap/gnome-42-2204/68 type squashfs (ro,nodev,relatime,x-gdu.hide)
+tmpfs on /run/snapd/ns type tmpfs (rw,nosuid,noexec,relatime,size=403064k,mode=755)
+nsfs on /run/snapd/ns/gnome-logs.mnt type nsfs (rw)
+nsfs on /run/snapd/ns/gnome-calculator.mnt type nsfs (rw)
+nsfs on /run/snapd/ns/gnome-characters.mnt type nsfs (rw)
+nsfs on /run/snapd/ns/gnome-system-monitor.mnt type nsfs (rw)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=403060k,mode=700,uid=1000,gid=1000)
+gvfsd-fuse on /run/user/1000/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+tmpfs on /run/user/1002 type tmpfs (rw,nosuid,nodev,relatime,size=403060k,mode=700,uid=1002,gid=1002)
+xrdp-chansrv on /home/rushikesh/thinclient_drives type fuse.xrdp-chansrv (rw,nosuid,nodev,relatime,user_id=1002,group_id=1002)
+gvfsd-fuse on /run/user/1002/gvfs type fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1002,group_id=1002)
+/dev/fuse on /run/user/1002/doc type fuse (rw,nosuid,nodev,relatime,user_id=1002,group_id=1002)
+
+
+
+
+
+rushikesh@afour-virtual-machine:~$ printenv
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+LESSCLOSE=/bin/lesspipe %s %s
+XDG_MENU_PREFIX=gnome-
+LANG=en_IN
+DISPLAY=:10.0
+OLDPWD=/home/rushikesh/Assignment3
+COLORTERM=truecolor
+SSH_AUTH_SOCK=/run/user/1002/keyring/ssh
+XDG_SESSION_ID=c5
+XRDP_SOCKET_PATH=/var/run/xrdp/sockdir
+USER=rushikesh
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/710ad03a_3f6e_4c32_8f4a_d0ac6217d77b
+PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+PWD=/home/rushikesh
+HOME=/home/rushikesh
+UID=1002
+SSH_AGENT_PID=15759
+QT_ACCESSIBILITY=1
+XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+GJS_DEBUG_OUTPUT=stderr
+GTK_MODULES=gail:atk-bridge
+TERM=xterm-256color
+SHELL=/bin/bash
+VTE_VERSION=5202
+QT_IM_MODULE=ibus
+XMODIFIERS=@im=ibus
+XDG_CURRENT_DESKTOP=GNOME
+GPG_AGENT_INFO=/run/user/1002/gnupg/S.gpg-agent:0:1
+GNOME_TERMINAL_SERVICE=:1.75
+SHLVL=1
+LANGUAGE=en_IN:en
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LOGNAME=rushikesh
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1002/bus
+XDG_RUNTIME_DIR=/run/user/1002
+PATH=/sbin:/bin:/usr/bin:/usr/local/bin:/snap/bin
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+SESSION_MANAGER=local/afour-virtual-machine:@/tmp/.ICE-unix/15699,unix/afour-virtual-machine:/tmp/.ICE-unix/15699
+XRDP_SESSION=1
+LESSOPEN=| /bin/lesspipe %s
+_=/usr/bin/printenv
+
+
+
+//Check for current enviornment variables configured. $PATH and env
+
+rushikesh@afour-virtual-machine:~$ echo $PATH
+/sbin:/bin:/usr/bin:/usr/local/bin:/snap/bin
+
+
+
+//Create soft-links for files and check multiple read/write/delete operations
+
+rushikesh@afour-virtual-machine:~$ cd Assignment3/
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2.txt
+rushikesh@afour-virtual-machine:~/Assignment3$ ln -s demo2.txt demo2_shortcut
+rushikesh@afour-virtual-machine:~/Assignment3$ ls
+demo1_rename  demo2_shortcut  demo2.txt
+
+
+
+
+
+
+
+

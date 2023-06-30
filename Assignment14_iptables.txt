@@ -1,0 +1,79 @@
+IP tables command assignments, 
+
+1) List existing iptable rules with line numbers.
+2) Flush existing iptable rules. {Before that try to save existing iptables rules to restore incase of corruption of rules configuration}
+3) Allow incoming traffic of HTTP on any port and Allow incoming traffic of HTTPS on port 443 only. 
+4) Allow ping from outside to the current machine.
+5) Allow ssh connections to the current machine.
+6) Block perticular IP address
+7) Block all request/response on port 80
+
+
+
+
+// 1) List existing iptable rules with line numbers.
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -L -v --line-numbers
+Chain INPUT (policy ACCEPT 938 packets, 96095 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+
+Chain OUTPUT (policy ACCEPT 374 packets, 49866 bytes)
+num   pkts bytes target     prot opt in     out     source               destination
+
+
+
+
+
+// 2) Flush existing iptable rules. {Before that try to save existing iptables rules to restore incase of corruption of rules configuration}
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -F
+[sudo] password for rushikesh:
+
+
+
+
+
+// 3) Allow incoming traffic of HTTP on any port and Allow incoming traffic of HTTPS on port 443 only.
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -I INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+
+
+
+
+// 4) Allow ping from outside to the current machine.
+
+rushikesh@afour-virtual-machine:~$ iptables -D INPUT -p icmp --icmp-type echo-request -j DROP
+
+rushikesh@afour-virtual-machine:~$ iptables -D OUTPUT -p icmp --icmp-type echo-reply -j DROP
+
+
+
+
+
+
+// 5) Allow ssh connections to the current machine.
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+
+
+
+
+// 6) Block perticular IP address
+
+rushikesh@afour-virtual-machine:~$ sudo iptables -A INPUT -s 203.0.113.51 -j DROP
+[sudo] password for rushikesh:
+
+
+
+
+
+// 7) Block all request/response on port 80 
+
+rushikesh@afour-virtual-machine:~$ iptables -A INPUT -s 65.55.44.100 -p tcp –destination-port 80 -j DROP

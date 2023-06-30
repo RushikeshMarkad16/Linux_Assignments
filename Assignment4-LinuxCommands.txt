@@ -1,0 +1,178 @@
+More Linux commands, 
+1) Practice changing User permissions using chmod command and ownership using chown for file testfile1.txt, testfile2.txt under testfolder directory.
+2) Try to generate some random data in above files testfile1.txt and testfile2.txt
+3) Copy the same files into two different dir and verify the md5 checksum to validate the integrity. 
+4) Perform text manipulation with "sed" command inside testfile1.txt / testfile2.txt 
+	- Search some pattern like name, unique id and then replace it with some PATTERN_STRING in a file
+	- Case insensitive matching for pattern search
+
+Paste the result/output for the same.
+
+//Changing User Permission
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-r--r-- 1 rushikesh rushikesh 117 Apr  6 17:25 testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ chmod a+r testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-r--r-- 1 rushikesh rushikesh 117 Apr  6 17:25 testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ chmod a+rx
+chmod: missing operand after ‘a+rx’
+Try 'chmod --help' for more information.
+rushikesh@afour-virtual-machine:~/testfolder$ chmod a+rx testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rwxr-xr-x 1 rushikesh rushikesh 117 Apr  6 17:25 testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ chmod u=rw,g=r,o= testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-r----- 1 rushikesh rushikesh 117 Apr  6 17:25 testfile1.txt
+
+
+//Chenging ownership
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l
+total 33764
+-rw-rw-r-- 1 rushikesh rushikesh 24543215 Apr 11 15:57 foo2.txt
+-rw-rw-r-- 1 rushikesh rushikesh 10000000 Apr 11 16:12 foo3.txt
+-rw-rw-r-- 1 rushikesh rushikesh  2097152 Apr 11 15:55 foo.txt
+-rw-r--r-- 1 rushikesh rushikesh       48 Apr  7 10:41 md5sums.txt
+drwxrwxr-x 2 rushikesh rushikesh     4096 Apr 12 18:04 rsa_key_pair
+-rw-rw-r-- 1 rushikesh rushikesh      116 Apr 11 16:51 testfile1.txt
+-rw-rw-r-- 1 rushikesh rushikesh      111 Apr 11 16:48 testfile2.txt
+-rw-r--r-- 1 rushikesh rushikesh    10240 Apr  6 17:15 testfolder.tar
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-rw-r-- 1 rushikesh rushikesh 116 Apr 11 16:51 testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ chown afour testfile1.txt
+chown: changing ownership of 'testfile1.txt': Operation not permitted
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-rw-r-- 1 rushikesh rushikesh 116 Apr 11 16:51 testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ sudo chown afour testfile1.txt
+[sudo] password for rushikesh:
+rushikesh@afour-virtual-machine:~/testfolder$ ls -l testfile1.txt
+-rw-rw-r-- 1 afour rushikesh 116 Apr 11 16:51 testfile1.txt
+
+
+//Copy the same files into two different dir and verify the md5 checksum to validate the integrity.
+rushikesh@afour-virtual-machine:~/testfolder$ xargs -n 1 cp -v testfile1.txt<<<"/home/rushikesh/tmp/1/ /home/rushikesh/tmp/2/ /home/rushikesh/tmp/3/"
+'testfile1.txt' -> '/home/rushikesh/tmp/1/testfile1.txt'
+'testfile1.txt' -> '/home/rushikesh/tmp/2/testfile1.txt'
+'testfile1.txt' -> '/home/rushikesh/tmp/3/testfile1.txt'
+rushikesh@afour-virtual-machine:~/testfolder$ cd ..rushikesh@afour-virtual-machine:~$ cd tmp/
+rushikesh@afour-virtual-machine:~/tmp$ ls -R
+.:
+1  2  3
+
+./1:
+testfile1.txt
+
+./2:
+testfile1.txt
+
+./3:
+testfile1.txt
+
+rushikesh@afour-virtual-machine:~/testfolder$ md5sum testfile1.txt > md5sums.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ls
+md5sums.txt  testfile1.txt  testfile2.txt  testfolder.tar
+rushikesh@afour-virtual-machine:~/testfolder$ cat md5sums.txt
+5c1b8fb49dc557ab1e33c7ec4f991de5  testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ md5sum -c md5sums.txt
+testfile1.txt: OK
+
+
+
+
+
+md5sums.txt  testfile1.txt  testfile2.txt  testfolder.tar
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed 's/John/Smith/' testfile1.txt
+Name : Smith Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed 's/9/7/2' testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9721568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed 's/9/7/2g' testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9721568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed 's/Smith/John/p' testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed -n 's/Smith/John/p' testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ sed -n 's/John/Smith/p' testfile1.txt
+Name : Smith Fernandez
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ vi testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ vi testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+Newline added
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed '$d' testfile1.txt
+Name : John Fernandez
+Age : 23
+Mobile No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed -n '/Mobile/p' testfile1.txt
+Mobile No : 9921568138
+
+rushikesh@afour-virtual-machine:~/testfolder$ sed -i 's/mobile/Mo/gI' testfile1.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat testfile1.txt
+Name : John Fernandez
+Age : 23
+Mo No : 9921568138
+Address : A-502, Vrindawan Society, Pimple Gurav, Pune 411044
+Newline added
+
+
+//Generating random data
+rushikesh@afour-virtual-machine:~/testfolder$ head -c 10MB /dev/urandom > foo3.txt
+rushikesh@afour-virtual-machine:~/testfolder$ ll -htotal 35M
+drwxr-xr-x  2 rushikesh rushikesh 4.0K Apr 11 16:12 ./
+drwxr-xr-x 23 rushikesh rushikesh 4.0K Apr 11 15:15 ../
+-rw-rw-r--  1 rushikesh rushikesh  24M Apr 11 15:57 foo2.txt
+-rw-rw-r--  1 rushikesh rushikesh 9.6M Apr 11 16:12 foo3.txt
+-rw-rw-r--  1 rushikesh rushikesh 2.0M Apr 11 15:55 foo.txt
+-rw-r--r--  1 rushikesh rushikesh   48 Apr  7 10:41 md5sums.txt
+-rw-r-----  1 rushikesh rushikesh 2.0M Apr 11 15:38 testfile1.txt
+-rw-r--r--  1 rushikesh rushikesh  112 Apr  6 17:25 testfile2.txt
+rushikesh@afour-virtual-machine:~/testfolder$ cat foo3.txt
+
+
+
+rushikesh@afour-virtual-machine:~/testfolder$ dd if=/dev/urandom of=testfile1.txt bs=2M count=1
+1+0 records in
+1+0 records out
+2097152 bytes (2.1 MB, 2.0 MiB) copied, 0.0143188 s, 146 MB/s
+
+rushikesh@afour-virtual-machine:~/testfolder$ dd if=/dev/urandom of=testfile2.txt bs=2M count=1
+1+0 records in
+1+0 records out
+2097152 bytes (2.1 MB, 2.0 MiB) copied, 0.0143188 s, 146 MB/s
